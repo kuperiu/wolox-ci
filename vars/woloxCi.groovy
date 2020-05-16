@@ -15,13 +15,8 @@ def call(String yamlName) {
 
     // build the image specified in the configuration
    //def customImage = docker.build(imageName, "--file ${projectConfig.dockerfile} .");
-    def command = "env"
-    def proc = command.execute()
-    proc.waitFor()              
-
-    println "Process exit code: ${proc.exitValue()}"
-    println "Std Err: ${proc.err.text}"
-    println "Std Out: ${proc.in.text}" 
+    println "ls -l".execute().text
+    println "env".execute().text
         def customImage = docker.image("${projectConfig.image}")
     // adds the last step of the build.
     def closure = buildSteps(projectConfig, customImage);
