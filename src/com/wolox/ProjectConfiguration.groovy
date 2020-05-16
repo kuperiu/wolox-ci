@@ -7,7 +7,7 @@ class ProjectConfiguration {
     def environment;
     def services;
     Steps steps;
-    def dockerfile;
+ //   def dockerfile;
     def image;
     def projectName;
     def buildNumber;
