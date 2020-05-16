@@ -40,6 +40,7 @@ class ConfigParser {
         // load the dockefile
         projectConfiguration.dockerfile = parseDockerfile(yaml.config);
 
+        projectConfiguration.image = parseDockerfile(yaml.config.image);
         // load the project name
         projectConfiguration.projectName = parseProjectName(yaml.config);
 
