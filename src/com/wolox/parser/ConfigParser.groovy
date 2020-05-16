@@ -22,7 +22,8 @@ class ConfigParser {
         projectConfiguration.environment.add("BUILD_ID=${env.BUILD_ID}");
 
         // add SCM environment variables
-        projectConfiguration.environment.add("BRANCH_NAME=${env.BRANCH_NAME.replace('origin/','')}");
+       // projectConfiguration.environment.add("BRANCH_NAME=${env.BRANCH_NAME.replace('origin/','')}");
+       projectConfiguration.environment.add("BRANCH_NAME=master");
         projectConfiguration.environment.add("CHANGE_ID=${env.CHANGE_ID}");
 
         if (env.CHANGE_ID) {
