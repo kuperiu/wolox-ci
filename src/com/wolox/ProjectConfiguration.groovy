@@ -8,6 +8,7 @@ class ProjectConfiguration {
     def services;
     Steps steps;
     def dockerfile;
+    def image;
     def projectName;
     def buildNumber;
     DockerConfiguration dockerConfiguration;

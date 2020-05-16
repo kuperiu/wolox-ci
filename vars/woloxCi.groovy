@@ -14,8 +14,8 @@ def call(String yamlName) {
     def imageName = projectConfig.dockerConfiguration.imageName().toLowerCase();
 
     // build the image specified in the configuration
-    def customImage = docker.build(imageName, "--file ${projectConfig.dockerfile} .");
-
+   //def customImage = docker.build(imageName, "--file ${projectConfig.dockerfile} .");
+    def customImage = docker.image("${projectConfig.image}")
     // adds the last step of the build.
     def closure = buildSteps(projectConfig, customImage);
 
