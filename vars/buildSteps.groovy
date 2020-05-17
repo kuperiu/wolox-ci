@@ -10,7 +10,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
 
         stage("clone") {
             step('update') {
-                sh "ls -la"
+
             }
         }
             // stepsA.each { step ->
