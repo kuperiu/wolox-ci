@@ -7,21 +7,24 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
     return { variables ->
         List<Step> stepsA = projectConfig.steps.steps
         def links = variables.collect { k, v -> "-it --link ${v.id}:${k}" }.join(" ")
-            stepsA.each { step ->
-                stage(step.name) {
-                                node {
-                docker { image 'maven:3-alpine' }
-            }
-            steps {
-                sh 'mvn --version'
-            }
-                    // def customImage = docker.image(step.image)
-                    // customImage.inside(links) {
-                    //     step.commands.each { command ->
-                    //         sh command
-                    //     }
-                    // }
-                }
-            }
+        pipeline {
+            
+        }
+            // stepsA.each { step ->
+            //     stage(step.name) {
+            //                     node {
+            //     docker { image 'maven:3-alpine' }
+            // }
+            // steps {
+            //     sh 'mvn --version'
+            // }
+            //         // def customImage = docker.image(step.image)
+            //         // customImage.inside(links) {
+            //         //     step.commands.each { command ->
+            //         //         sh command
+            //         //     }
+            //         // }
+            //     }
+            // }
     }
 }
