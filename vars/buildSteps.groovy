@@ -9,11 +9,11 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         def links = variables.collect { k, v -> "--link ${v.id}:${k}" }.join(" ")
         node() {
                 stepsA.each { step ->
-                                        node {
-                            label 'team_a'
-                        }
                     stage(step.name) {
                         dockerImage.inside(links) {
+                                                                    node {
+                            label 'team_a'
+                        }
                             step.commands.each { command ->
                                 sh command
                             }
