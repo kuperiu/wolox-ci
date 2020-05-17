@@ -16,7 +16,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                             sh command
                         }
                     }
-                        
+                        }
                 }
         }
     }
