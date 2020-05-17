@@ -10,6 +10,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
             stepsA.each { step ->
                 stage(step.name) {
                     print "yyyyyyyy"
+                    print step
                     print step.name
                     print step.image
                    // def customImage = docker.image(step.image)
