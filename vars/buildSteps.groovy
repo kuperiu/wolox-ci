@@ -7,7 +7,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
     return { variables ->
         List<Step> stepsA = projectConfig.steps.steps
         def links = variables.collect { k, v -> "--link ${v.id}:${k}" }.join(" ")
-        stage("clone") {
+        stage('clone') {
 
         }
             // stepsA.each { step ->
