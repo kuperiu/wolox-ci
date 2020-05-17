@@ -9,7 +9,8 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         def links = variables.collect { k, v -> "--link ${v.id}:${k}" }.join(" ")
             stepsA.each { step ->
                 stage(step.name) {
-                    dockerImage.inside(links) {
+                    def customImage = docker.image(step.image)
+                    customImage.inside(links) {
                         step.commands.each { command ->
                             sh command
                         }
