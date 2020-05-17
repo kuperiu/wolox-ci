@@ -9,7 +9,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         def links = variables.collect { k, v -> "-it --link ${v.id}:${k}" }.join(" ")
             stepsA.each { step ->
                 stage(step.name) {
-                                agent {
+                                node {
                 docker { image 'maven:3-alpine' }
             }
             steps {
