@@ -11,8 +11,8 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                 stage(step.name) {
                     print "yyyyyyyy"
                     print step.name
-                    print step.image
-                    def customImage = docker.image(step.image)
+                    print step.name.image
+                    def customImage = docker.image(step.name.image)
                     customImage.inside(links) {
                         step.commands.each { command ->
                             sh command
