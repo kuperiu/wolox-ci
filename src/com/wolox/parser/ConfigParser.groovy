@@ -68,15 +68,16 @@ class ConfigParser {
     }
 
     static def parseSteps(def yamlSteps) {
+        print  yamlSteps.dump()
         List<Step> steps = yamlSteps.collect { k, v ->
-            Step step = new Step(name: k)
-
+            Step step = new Step(name: k, image: v.image) 
             // a step can have one or more commands to execute
-            v.each {
+            v.commands.each {
                 step.commands.add(it);
             }
             return step
         }
+
         return new Steps(steps: steps);
     }
 
