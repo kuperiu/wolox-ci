@@ -8,7 +8,13 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         List<Step> stepsA = projectConfig.steps.steps
         def links = variables.collect { k, v -> "-it --link ${v.id}:${k}" }.join(" ")
         pipeline {
-            node { label 'team_a' }
+            stages {
+                stage('clone') {
+                    steps {
+                        sh "ls -la"
+                    }
+                }
+            }
         }
             // stepsA.each { step ->
             //     stage(step.name) {
