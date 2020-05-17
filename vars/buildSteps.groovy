@@ -11,16 +11,13 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
             dockerImage.inside(links) {
                 stepsA.each { step ->
                     stage(step.name) {
-                        agent {
-                            label 'team_a'
-                        }
+                        dockerImage.inside(links) {
                         step.commands.each { command ->
                             sh command
                         }
                     }
+                        
                 }
-            }
         }
     }
 }
-
