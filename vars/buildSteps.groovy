@@ -7,10 +7,15 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
     return { variables ->
         List<Step> stepsA = projectConfig.steps.steps
         def links = variables.collect { k, v -> "--link ${v.id}:${k}" }.join(" ")
-        node { // node/agent
-  stage('Stage 1') {
-    echo 'Hello World' // echo Hello World
-  }
+node {
+    stage("Build") {
+        echo "Some code compilation here..."
+    }
+
+    stage("Test") {
+        echo "Some tests execution here..."
+        echo 1
+    }
 }
             // stepsA.each { step ->
             //     stage(step.name) {
