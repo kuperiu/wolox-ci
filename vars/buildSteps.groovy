@@ -5,12 +5,12 @@ import com.wolox.steps.Step;
 
 def call(ProjectConfiguration projectConfig, def dockerImage) {
     return { variables ->
-        stepsA = projectConfig.steps.steps
+        List<Step> stepsA = projectConfig.steps.steps
         def links = variables.collect { k, v -> "--link ${v.id}:${k}" }.join(" ")
             stepsA.each { step ->
                 stage(step.name) {
                     print "yyyyyyyy"
-                    print step
+                    print step.dump()
                     print step.name
                     print step.image
                    // def customImage = docker.image(step.image)
