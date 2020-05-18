@@ -22,7 +22,7 @@ def call(String yamlName) {
 }
  projectConfig.stages.stages.each {
     print it.name
-    it.each { k, v ->
+    it.steps.each { k, v ->
     print k
         print v.image()
     }
