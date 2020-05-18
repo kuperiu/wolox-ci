@@ -36,8 +36,8 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                 node('team_a') {
                     stage "Start"
                     parallel (
-                        stage('a') {
-                            
+                        'a' {
+
                         }
                         // stage(step.name) {
                         //     // def customImage = docker.image(step.image)
