@@ -66,6 +66,9 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                         //         }
                         //     }
                     )
+                    stage "middle" {
+
+                    }
                 }
             }
         }
