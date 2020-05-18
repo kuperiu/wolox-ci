@@ -22,6 +22,10 @@ def call(String yamlName) {
 }
  projectConfig.stages.stages.each {
     print it.name
+    it.each { k, v ->
+        print k
+        print k.image
+    }
 }
     // build the image specified in the configuration
    //def customImage = docker.build(imageName, "--file ${projectConfig.dockerfile} .");
