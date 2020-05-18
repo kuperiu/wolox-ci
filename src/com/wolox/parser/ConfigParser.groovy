@@ -1,12 +1,11 @@
 package com.wolox.parser;
 
-import com.wolox.stages.*;
 import com.wolox.ProjectConfiguration;
 import com.wolox.docker.DockerConfiguration;
 import com.wolox.services.*;
 import com.wolox.steps.*;
 import com.wolox.secrets.*;
-
+import com.wolox.stages.*;
 
 class ConfigParser {
 
