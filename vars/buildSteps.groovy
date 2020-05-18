@@ -19,6 +19,43 @@ def vault(service, path, key) {
 
 def call(ProjectConfiguration projectConfig, def dockerImage) {
     return { variables ->
+        List<Stage> stagesA = projectConfig.stages.stages
+        List<Secret> secrets = projectConfig.secrets.secrets
+        def secretList = []
+        secrets.each { secret ->
+           mySecret = vault(secret.service, secret.path, secret.key)
+           secretList << "${secret.name}=${mySecret}"
+        } 
+
+        label = "team_a"
+        def links = '--entrypoint=""'
+
+        withEnv(secretList) {
+            stagesA.each { stage ->
+                node(label) {
+                    stage "${stage}" {
+                        stage.each { step ->
+                            parallel (
+                                "${step.name}": {
+                                    node(label) {
+                                        docker.image(step.image).inside("--entrypoint=''")  {
+                                            step.commands.each { command ->
+                                                sh command
+                                            }
+                                        }   
+                                    }
+                                }
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+def calling(ProjectConfiguration projectConfig, def dockerImage) {
+    return { variables ->
         List<Step> stepsA = projectConfig.steps.steps
         List<Secret> secrets = projectConfig.secrets.secrets
         def secretList = []
@@ -68,7 +105,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                     )
 node(label) {
     stage 'middle' {
-        
+
     }
 }
                 }

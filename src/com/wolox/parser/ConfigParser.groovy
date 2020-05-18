@@ -5,6 +5,7 @@ import com.wolox.docker.DockerConfiguration;
 import com.wolox.services.*;
 import com.wolox.steps.*;
 import com.wolox.secrets.*;
+import com.wolox.stages.*;
 
 class ConfigParser {
 
@@ -33,8 +34,8 @@ class ConfigParser {
         }
 
         // parse the execution steps
-        projectConfiguration.steps = parseSteps(yaml.steps);
-
+       // projectConfiguration.steps = parseSteps(yaml.steps);
+        projectConfiguration.stages = parseStages(yaml.stages);
         projectConfiguration.secrets = parseSecrets(yaml.secrets);
 
         // parse the necessary services
@@ -80,8 +81,21 @@ class ConfigParser {
         return new Secrets(secrets: secrets);
     }
 
+    static def parseStages(def yamlStages) {
+        List<Stage> stages = yamlStages.collect { k, v ->
+            Stage stage = new Stage(name: k) 
+            // a stage can have one or more commands to execute
+            v.steps.each {
+                steps = parseSteps(it)
+                stage.steps.add(steps);
+            }
+            return stage
+        }
+
+        return new Stages(stages: stages);
+    }
+
     static def parseSteps(def yamlSteps) {
-        print  yamlSteps.dump()
         List<Step> steps = yamlSteps.collect { k, v ->
             Step step = new Step(name: k, image: v.image) 
             // a step can have one or more commands to execute
