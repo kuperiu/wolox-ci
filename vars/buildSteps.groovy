@@ -36,14 +36,17 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                 node('team_a') {
                     stage "Start"
                     parallel (
-                        "${step.name}:" {
-                            // def customImage = docker.image(step.image)
-                                docker.image(step.image).inside("--entrypoint=''")  {
-                                    step.commands.each { command ->
-                                        sh command
-                                    }
-                                }
-                            }
+                        stage('a') {
+                            
+                        }
+                        // stage(step.name) {
+                        //     // def customImage = docker.image(step.image)
+                        //         docker.image(step.image).inside("--entrypoint=''")  {
+                        //             step.commands.each { command ->
+                        //                 sh command
+                        //             }
+                        //         }
+                        //     }
                     )
                 }
             }
