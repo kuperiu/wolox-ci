@@ -9,7 +9,7 @@ def vault(service, path, key) {
         login = "vault login -method=aws role=${service}"
         readSecret = "vault kv get -format=json ${path} | jq .data.data.${key}"
         script {  
-            sh(script: login, returnStdout: false)
+            sh(script: login)
             return sh(script: readSecret, returnStdout: true).trim()
         }
     }
