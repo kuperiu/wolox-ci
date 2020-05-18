@@ -34,9 +34,12 @@ class ConfigParser {
         // parse the execution steps
         projectConfiguration.steps = parseSteps(yaml.steps);
 
+        projectConfiguration.secrets = parseSecrets(yaml.secrets);
+
         // parse the necessary services
         projectConfiguration.services = parseServices(yaml.services);
 
+        
         // load the dockefile
      //   projectConfiguration.dockerfile = parseDockerfile(yaml.config);
 
@@ -65,6 +68,15 @@ class ConfigParser {
         }
 
         return config;
+    }
+
+    static def parseSecrets(def yamlSecrets) {
+        List<Step> secrets = yamlSecrets.collect { k, v ->
+            Step secret = new Step(name: k, service: v.service, path: v.path, key: v.key) 
+            return secret
+        }
+
+        return new Steps(steps: steps);
     }
 
     static def parseSteps(def yamlSteps) {
