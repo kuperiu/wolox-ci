@@ -29,13 +29,15 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         //def links = variables.collect { k, v -> "--entrypoint="" --link ${v.id}:${k}" }.join(" ")
 
         def links = '--entrypoint=""'
-        withEnv(secretList) {
-            stepsA.each { step ->
-                stage(step.name) {
-                   // def customImage = docker.image(step.image)
-                    docker.image(step.image).inside("--entrypoint=''")  {
-                        step.commands.each { command ->
-                            sh command
+        node('team_a') {
+            withEnv(secretList) {
+                stepsA.each { step ->
+                    stage(step.name) {
+                    // def customImage = docker.image(step.image)
+                        docker.image(step.image).inside("--entrypoint=''")  {
+                            step.commands.each { command ->
+                                sh command
+                            }
                         }
                     }
                 }
