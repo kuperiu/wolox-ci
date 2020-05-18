@@ -31,8 +31,8 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         def links = '--entrypoint=""'
         withEnv(secretList) {
             stepsA.each { step ->
+                node('team_a') {
                 stage(step.name) {
-                    node('team_a') {
                     // def customImage = docker.image(step.image)
                         docker.image(step.image).inside("--entrypoint=''")  {
                             step.commands.each { command ->
