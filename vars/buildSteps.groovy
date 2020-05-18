@@ -35,17 +35,14 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
             stepsA.each { step ->
                 node('team_a') {
                     stage "Start"
-                    parallel (
-                        stage(step.name) {
-                            sh 'echo "lolo"'
-                            // def customImage = docker.image(step.image)
-                                // docker.image(step.image).inside("--entrypoint=''")  {
-                                //     step.commands.each { command ->
-                                //         sh command
-                                //     }
-                                // }
-                            }
-                    )
+  parallel (
+    'Build': {
+      sh 'docker build -t karlkfi/minitwit .'
+    },
+    'Test': {
+      sh 'docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app maven:3.3.9-jdk-8-alpine mvn test'
+    }
+  )
                 }
             }
         }
