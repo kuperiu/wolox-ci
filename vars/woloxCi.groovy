@@ -14,7 +14,7 @@ def call(String yamlName) {
     def imageName = projectConfig.dockerConfiguration.imageName().toLowerCase();
     print yaml.stages.dump()
     print "!!!!!!!!!"
-    print  projectConfig.stages.dump
+    print  projectConfig.stages.dump()
  projectConfig.stages.each {
     print it.name
 }
