@@ -35,14 +35,10 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
             stepsA.each { step ->
                 node('team_a') {
                     stage "Start"
-  parallel (
-    'Build': {
-      sh 'docker build -t karlkfi/minitwit .'
-    },
-    'Test': {
-      sh 'docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app maven:3.3.9-jdk-8-alpine mvn test'
-    }
-  )
+    parallel (
+        'gfortran': { build('trunk/build/gfortran') },
+        'ifort': { build('trunk/build/ifort') }
+    )
                 }
             }
         }
