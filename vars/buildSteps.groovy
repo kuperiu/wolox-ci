@@ -26,7 +26,10 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         // } 
 
         print "@@@@@@@@@@"
-        print projectConfig.secrets.dump()
+        print projectConfig.secrets.each { a ->
+            print a.name
+            print a .service
+        }
         //def links = variables.collect { k, v -> "--entrypoint="" --link ${v.id}:${k}" }.join(" ")
 
         def links = '--entrypoint=""'
