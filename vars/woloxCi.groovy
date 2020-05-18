@@ -17,7 +17,9 @@ def call(String yamlName) {
     print  projectConfig.stages.dump()
     print  projectConfig.secrets.dump()
 
-
+ projectConfig.secrets.each {
+    print it.name
+}
  projectConfig.stages.each {
     print it.name
 }
