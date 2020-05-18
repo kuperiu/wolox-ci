@@ -36,7 +36,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                 node('team_a') {
                     stage "Start"
                     parallel (
-                        'a' {
+                        step('a') {
 
                         }
                         // stage(step.name) {
