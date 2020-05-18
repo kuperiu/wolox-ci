@@ -40,7 +40,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                             // def customImage = docker.image(step.image)
                                 docker.image(step.image).inside("--entrypoint=''")  {
                                     step.commands.each { command ->
-                                        sh command
+                                        command
                                     }
                                 }
                             }
