@@ -12,6 +12,7 @@ def call(String yamlName) {
     ProjectConfiguration projectConfig = ConfigParser.parse(yaml, env);
 
     def imageName = projectConfig.dockerConfiguration.imageName().toLowerCase();
+    print yaml.stages.dump()
     print "!!!!!!!!!"
  projectConfig.stages.each {
     print it.name
