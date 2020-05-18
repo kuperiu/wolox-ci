@@ -1,6 +1,7 @@
 import org.jenkinsci.plugins.workflow.libs.Library
 @Library('wolox-ci')
 import com.wolox.*;
+import com.wolox.steps.Stage;
 import com.wolox.steps.Step;
 import com.wolox.secrets.Secret;
 
