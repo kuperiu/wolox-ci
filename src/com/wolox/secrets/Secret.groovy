@@ -1,6 +1,6 @@
 package com.wolox.secrets;
 
-class Step {
+class Secret {
     String name;
     String service;
     String path;
