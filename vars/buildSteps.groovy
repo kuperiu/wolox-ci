@@ -10,8 +10,8 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         def links = '--entrypoint=""'
             stepsA.each { step ->
                 stage(step.name) {
-                    def customImage = docker.image(step.image)
-                    customImage.inside(links) {
+                   // def customImage = docker.image(step.image)
+                    docker.image("amazon/aws-cli").inside('--entrypoint=""')  {
                         step.commands.each { command ->
                             sh command
                         }
