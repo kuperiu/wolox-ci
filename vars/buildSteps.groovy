@@ -19,13 +19,14 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
     return { variables ->
         List<Step> stepsA = projectConfig.steps.steps
         List<Secret> secrets = projectConfig.secrets.secrets
-        // def secretList = []
-        // secrets.each { secret ->
-        //    mySecret = vault(secret.service, secret.path, secret.key)
-        //    secretList << "${secret.name}=${mySecret}"
-        // } 
+        def secretList = []
+        secrets.each { secret ->
+           mySecret = vault(secret.service, secret.path, secret.key)
+           secretList << "${secret.name}=${mySecret}"
+        } 
 
         print "@@@@@@@@@@"
+        print secretList.dump()
 
         //def links = variables.collect { k, v -> "--entrypoint="" --link ${v.id}:${k}" }.join(" ")
 
