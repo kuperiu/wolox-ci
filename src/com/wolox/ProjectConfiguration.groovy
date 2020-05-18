@@ -1,7 +1,7 @@
 package com.wolox;
 
 import com.wolox.docker.DockerConfiguration;
-import com.wolox.stages.Stages;
+import com.wolox.stages.*;
 import com.wolox.steps.Steps;
 import com.wolox.secrets.Secrets;
 

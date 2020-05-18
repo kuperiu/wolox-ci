@@ -5,6 +5,6 @@ class Stages {
     List<Stage> stages;
 
     def getVar(def dockerImage) {
-        return "buildSteps"
+        return "buildStages"
     }
 }
