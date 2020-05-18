@@ -18,7 +18,7 @@ def vault(service, path, key) {
 def call(ProjectConfiguration projectConfig, def dockerImage) {
     return { variables ->
         List<Step> stepsA = projectConfig.steps.steps
-        List<Secret> secrets = projectConfig.secrets
+        List<Secret> secrets = projectConfig.secrets.secrets
         // def secretList = []
         // secrets.each { secret ->
         //    mySecret = vault(secret.service, secret.path, secret.key)
