@@ -17,10 +17,10 @@ def call(String yamlName) {
     print  projectConfig.stages.dump()
     print  projectConfig.secrets.dump()
 
- projectConfig.secrets.each { s ->
+ projectConfig.secrets.secrets.each { s ->
     print s.name
 }
- projectConfig.stages.each {
+ projectConfig.stages.stages.each {
     print it.name
 }
     // build the image specified in the configuration
