@@ -35,10 +35,16 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
             stepsA.each { step ->
                 node('team_a') {
                     stage "Start"
-    parallel (
-        'gfortran': { build('trunk/build/gfortran') },
-        'ifort': { build('trunk/build/ifort') }
-    )
+                    parallel (
+                        "${step.name}:" {
+                            // def customImage = docker.image(step.image)
+                                docker.image(step.image).inside("--entrypoint=''")  {
+                                    step.commands.each { command ->
+                                        sh command
+                                    }
+                                }
+                            }
+                    )
                 }
             }
         }
