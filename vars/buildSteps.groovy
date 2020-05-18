@@ -18,7 +18,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         //def links = variables.collect { k, v -> "--entrypoint="" --link ${v.id}:${k}" }.join(" ")
 
         def links = '--entrypoint=""'
-        def secret = vault("test-lior2", "kv/dev", env)
+        def secret = vault("test-lior2", "kv/dev", "env")
         withEnv(["SECRET=${secret}"]) {
             stepsA.each { step ->
                 stage(step.name) {
