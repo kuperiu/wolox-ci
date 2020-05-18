@@ -11,7 +11,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
             stepsA.each { step ->
                 stage(step.name) {
                    // def customImage = docker.image(step.image)
-                    docker.image("amazon/aws-cli").inside('--entrypoint=""')  {
+                    docker.image("amazon/aws-cli").inside('--entrypoint="\"""\"')  {
                         step.commands.each { command ->
                             sh command
                         }
