@@ -36,7 +36,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                 node(label) {
                     stage "Start"
                     parallel (
-                        "'${step.name}'" {
+                        "'${step.name}':" {
                             node(label) {
                       git url: 'http://github.com/karlkfi/minitwit'
       sh 'ci/build.sh'                
