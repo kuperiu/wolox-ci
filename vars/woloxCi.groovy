@@ -23,7 +23,7 @@ def call(String yamlName) {
  projectConfig.stages.stages.each {
     print it.name
     it.each { 
-        print it.dump()
+        print it.image()
     }
 }
     // build the image specified in the configuration
