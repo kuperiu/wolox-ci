@@ -8,7 +8,7 @@ import com.wolox.steps.Stages;
 class ProjectConfiguration {
     def environment;
     def services;
-    Steps steps;
+  //  Steps steps;
     Secrets secrets;
     Stages stages;
  //   def dockerfile;
