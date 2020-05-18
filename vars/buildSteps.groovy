@@ -20,3 +20,4 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
             }
     }
 }
+
