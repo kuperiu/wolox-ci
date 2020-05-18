@@ -10,7 +10,7 @@ def call(String yamlName) {
 
     // load project's configuration
     ProjectConfiguration projectConfig = ConfigParser.parse(yaml, env);
-    print projectConfig.dump()
+    print projectConfig.secrets.dump()
     def imageName = projectConfig.dockerConfiguration.imageName().toLowerCase();
 
     // build the image specified in the configuration
