@@ -86,7 +86,7 @@ class ConfigParser {
             Steps steps = new Steps();
             v.each { i, j ->
                 Step step = new Step(name: i, image: j.image) 
-                steps.add(step)
+                steps << step
             }
             Stage stage = new Stage(name: k, steps: steps) 
             return stage
