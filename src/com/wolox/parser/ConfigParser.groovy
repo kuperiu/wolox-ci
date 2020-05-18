@@ -73,7 +73,7 @@ class ConfigParser {
 
     static def parseSecrets(def yamlSecrets) {
         List<Step> secrets = yamlSecrets.collect { k, v ->
-            Step secret = new Step(name: k, service: v.service, path: v.path, key: v.key) 
+            Secret secret = new Step(name: k, service: v.service, path: v.path, key: v.key) 
             return secret
         }
 
