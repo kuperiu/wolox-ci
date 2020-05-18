@@ -7,7 +7,7 @@ class ProjectConfiguration {
     def environment;
     def services;
     Steps steps;
-    Secrets secret
+    Secrets secrets;
  //   def dockerfile;
     def image;
     def projectName;
