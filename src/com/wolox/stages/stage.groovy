@@ -4,5 +4,5 @@ import com.wolox.steps.*;
 
 class Stage {
     String name;
-    List<Step> steps;
+    List<Step> steps = [];
 }
