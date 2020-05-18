@@ -82,6 +82,7 @@ class ConfigParser {
     }
 
     static def parseStages(def yamlStages) {
+        print yamlStages.dump()
         List<Stage> stages = yamlStages.collect { k, v ->
             Stage stage = new Stage(name: k) 
             // a stage can have one or more commands to execute
