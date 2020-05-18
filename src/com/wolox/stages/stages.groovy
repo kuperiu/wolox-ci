@@ -1,3 +1,4 @@
+import com.wolox.steps.*;
 package com.wolox.stages;
 
 class Stages {

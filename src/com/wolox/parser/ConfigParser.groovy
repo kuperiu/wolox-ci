@@ -36,6 +36,7 @@ class ConfigParser {
 
         // parse the execution steps
        // projectConfiguration.steps = parseSteps(yaml.steps);
+        print yaml.stages.dump();
         projectConfiguration.stages = parseStages(yaml.stages);
         projectConfiguration.secrets = parseSecrets(yaml.secrets);
 
