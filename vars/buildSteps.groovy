@@ -29,25 +29,31 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
 
 
         //def links = variables.collect { k, v -> "--entrypoint="" --link ${v.id}:${k}" }.join(" ")
-
+        label = "team_a"
         def links = '--entrypoint=""'
         withEnv(secretList) {
             stepsA.each { step ->
-                node('team_a') {
+                node(label) {
                     stage "Start"
                     parallel (
-  'Build' : {
-    node {
-      git url: 'http://github.com/karlkfi/minitwit'
-      sh 'ci/build.sh'
-    }
-  },
-  'Test' : {
-    node {
-      git url: 'http://github.com/karlkfi/minitwit'
-      sh 'ci/test-unit.sh'
-    }
-  }
+                        "${step.name}" {
+                            node(label) {
+                      git url: 'http://github.com/karlkfi/minitwit'
+      sh 'ci/build.sh'                
+                            }
+                        }
+//   'Build' : {
+//     node {
+//       git url: 'http://github.com/karlkfi/minitwit'
+//       sh 'ci/build.sh'
+//     }
+//   },
+//   'Test' : {
+//     node {
+//       git url: 'http://github.com/karlkfi/minitwit'
+//       sh 'ci/test-unit.sh'
+//     }
+//   }
                         // stage(step.name) {
                         //     // def customImage = docker.image(step.image)
                         //         docker.image(step.image).inside("--entrypoint=''")  {
