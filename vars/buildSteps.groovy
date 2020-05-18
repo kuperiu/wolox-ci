@@ -37,7 +37,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                     stage "Start"
                     parallel (
                         stage(step.name) {
-                            echo "lolo"
+                            sh 'echo "lolo"'
                             // def customImage = docker.image(step.image)
                                 // docker.image(step.image).inside("--entrypoint=''")  {
                                 //     step.commands.each { command ->
