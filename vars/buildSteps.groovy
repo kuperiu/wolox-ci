@@ -25,14 +25,11 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
            secretList << "${secret.name}=${mySecret}"
         } 
 
-        print "@@@@@@@@@@"
-        print secretList.dump()
 
         //def links = variables.collect { k, v -> "--entrypoint="" --link ${v.id}:${k}" }.join(" ")
 
         def links = '--entrypoint=""'
-        def secret = vault("test-lior2", "kv/dev", "env")
-        withEnv(["SECRET=${secret}"]) {
+        withEnv(secretList) {
             stepsA.each { step ->
                 stage(step.name) {
                    // def customImage = docker.image(step.image)
