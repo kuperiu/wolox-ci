@@ -1,6 +1,6 @@
 package com.wolox.stages;
 
-class Stage {
+class Stages {
     List<Stage> stages;
 
     def getVar(def dockerImage) {
