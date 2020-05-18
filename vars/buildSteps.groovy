@@ -7,7 +7,7 @@ def vault(service, path, key) {
     withEnv(["VAULT_ADDR=https://this.vault.dazn-dev.com", "VAULT_NAMESPACE=${service}"]) {
         script {  
             sh(script: 'vault login -method=aws role=test-lior2', returnStdout: false)
-            return sh(script: 'vault kv get -format=json kv/dev | jq .data.data.'"${key}"'', returnStdout: true).trim()
+            return sh(script: 'vault kv get -format=json kv/dev | jq .data.data."${key}"', returnStdout: true).trim()
         }
     }
 }
