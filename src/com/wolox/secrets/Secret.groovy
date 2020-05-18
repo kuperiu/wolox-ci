@@ -1,4 +1,4 @@
-package com.wolox.steps;
+package com.wolox.secrets;
 
 class Step {
     String name;
