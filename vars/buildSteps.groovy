@@ -6,7 +6,7 @@ import com.wolox.steps.Step;
 def call(ProjectConfiguration projectConfig, def dockerImage) {
     return { variables ->
         List<Step> stepsA = projectConfig.steps.steps
-        def entrypoint = '--entrypoint=""'
+        def entrypoint = /--entrypoint="""/
         def links = variables.collect { k, v -> "${entrypoint} --link ${v.id}:${k}" }.join(" ")
             stepsA.each { step ->
                 stage(step.name) {
