@@ -76,7 +76,7 @@ class ConfigParser {
             return secret
         }
 
-        return new Steps(steps: steps);
+        return new Secrets(secrets: secrets);
     }
 
     static def parseSteps(def yamlSteps) {
