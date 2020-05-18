@@ -34,7 +34,8 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         withEnv(secretList) {
             stepsA.each { step ->
                 node('team_a') {
-                    parallel {
+                    stage "Start"
+                    parallel (
                         stage(step.name) {
                             // def customImage = docker.image(step.image)
                                 docker.image(step.image).inside("--entrypoint=''")  {
@@ -43,7 +44,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                     }
                                 }
                             }
-                    }
+                    )
                 }
             }
         }
