@@ -15,7 +15,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         //def links = variables.collect { k, v -> "--entrypoint="" --link ${v.id}:${k}" }.join(" ")
         def links = '--entrypoint=""'
         def secret = vault()
-        withEnv(["[SECRET=${secret}]") {
+        withEnv(["SECRET=${secret}"]) {
             stepsA.each { step ->
                 stage(step.name) {
                    // def customImage = docker.image(step.image)
