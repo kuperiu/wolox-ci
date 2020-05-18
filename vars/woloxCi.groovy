@@ -22,9 +22,9 @@ def call(String yamlName) {
 }
  projectConfig.stages.stages.each {
     print it.name
-    it.steps.each { k, v ->
-    print k
-        print v.image()
+    it.each { lior ->
+        print lior.dump()
+        print lior
     }
 }
     // build the image specified in the configuration
