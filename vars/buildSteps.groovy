@@ -38,8 +38,11 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                     parallel (
                         "${step.name}": {
                             node(label) {
-                      git url: 'http://github.com/karlkfi/minitwit'
-      sh 'ci/build.sh'                
+                                docker.image(step.image).inside("--entrypoint=''")  {
+                                     step.commands.each { command ->
+                                        sh command
+                                     }
+                                }   
                             }
                         }
 //   'Build' : {
