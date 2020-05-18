@@ -83,11 +83,10 @@ class ConfigParser {
 
     static def parseStages(def yamlStages) {
         List<Stage> stages = yamlStages.collect { k, v ->
-            Steps steps = new Steps();
-            v.each { i, j ->
-                Step step = new Step(name: i, image: j.image) 
-                steps << step
-            }
+             List<Step> steps = v.collect { i, j ->
+             Step step = new Step(name: i, image: j.image) 
+                return step
+             }
             Stage stage = new Stage(name: k, steps: steps) 
             return stage
         }
