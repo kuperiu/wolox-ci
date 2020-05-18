@@ -34,13 +34,15 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         withEnv(secretList) {
             stepsA.each { step ->
                 node('team_a') {
-                stage(step.name) {
-                    // def customImage = docker.image(step.image)
-                        docker.image(step.image).inside("--entrypoint=''")  {
-                            step.commands.each { command ->
-                                sh command
+                    parallel {
+                        stage(step.name) {
+                            // def customImage = docker.image(step.image)
+                                docker.image(step.image).inside("--entrypoint=''")  {
+                                    step.commands.each { command ->
+                                        sh command
+                                    }
+                                }
                             }
-                        }
                     }
                 }
             }
