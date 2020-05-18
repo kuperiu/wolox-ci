@@ -5,9 +5,11 @@ import com.wolox.steps.Step;
 
 def vault(service, path, key) { 
     withEnv(["VAULT_ADDR=https://this.vault.dazn-dev.com", "VAULT_NAMESPACE=${service}"]) {
+        login = "vault login -method=aws role=${service}"
+        readSecret = "vault kv get -format=json ${path} | jq .data.data.${key}"
         script {  
-            sh(script: 'vault login -method=aws role=\"${service}\"', returnStdout: false)
-            return sh(script: 'vault kv get -format=json \"${path}\" | jq .data.data.\"${key}\"', returnStdout: true).trim()
+            sh(script: login, returnStdout: false)
+            return sh(script: readSecret, returnStdout: true).trim()
         }
     }
 }
