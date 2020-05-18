@@ -82,7 +82,7 @@ class ConfigParser {
     }
 
     static def parseStages(def yamlStages) {
-        Stages stages = new Stages() 
+        List<Stages> stages = []
         yamlStages.each { k, v ->
             Stage stage = new Stage(name: k) 
             stages << stage
