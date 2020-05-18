@@ -86,8 +86,9 @@ class ConfigParser {
             Stage stage = new Stage(name: k) 
             // a stage can have one or more commands to execute
             v.each {
-                steps = parseSteps(it)
-                stage.steps.add(steps);
+                // steps = parseSteps(it)
+                // stage.steps.add(steps);
+                print it
             }
             return stage
         }
