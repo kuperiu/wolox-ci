@@ -95,21 +95,13 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                     println(s.dump())
                                     parallelSteps["${s.name}"] = {
                                         stage(s.name) {
-                                            docker.image(s.image).inside("--entrypoint=''") {
-                                                // for (command in s.commands) {
-                                                //     sh command
-                                                // }
-                                                echo s.name
-                                                sh "sleep 10"
-                                            }
+                                           echo s.name
                                         }
                                     }
                                 }
                             }
-                            println parallelSteps.dump()
-                            parallel(parallelSteps)
                         }
-                        
+                        parallel(parallelSteps)
                     }
                 }
 
