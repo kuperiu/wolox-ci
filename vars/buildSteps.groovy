@@ -90,7 +90,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                         for (myStep in myStage.steps) {
                             println("#######")
                             println(myStep)
-                            println(steps.dump())
+                            println(stepsA.dump())
                         }
                     }
                 }
