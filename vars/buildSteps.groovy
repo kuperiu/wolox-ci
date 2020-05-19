@@ -38,11 +38,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
             node() {
                 stagesA.each { sta ->
                     stage(sta.name) {
-                        sta.steps.each { ste ->
-                            println(ste.name)
-                            println(ste.commands)
-                        }
-                        prepareBuildStages(steps, )
+                        println(sta.steps)
                     }
                 }
             }
