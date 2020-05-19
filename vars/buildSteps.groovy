@@ -38,17 +38,9 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
             node() {
                 stagesA.each { s ->
                     stage(s.name) {
-                        parallel 'linux': {
-                            stage('Linux') {
-                                /* .. Your code/scripts .. */
-                            }
-                        }, 'windows': {
-                            stage('Windows') {
-                                /* .. Your code/scripts .. */
-                            }
-                        }
+
                     }
-                    }
+                }
             }
         }
     }
@@ -126,35 +118,16 @@ def getStep(Steps steps, String name) {
 }
 
 // Create List of build stages to suit
-def prepareBuildStages(stages, steps) {
+def prepareBuildStages(steps, stepName) {
     def buildStagesList = []
-
-    stages.each { stage ->
+    steps.each { s ->
         def buildParallelMap = [:]
-        stage.steps.each { stepName ->
-            steps.each { step ->
-                if (step.name == stepName) {
-                    buildParallelMap.put(stage.name, prepareOneBuildStage(stepName))
-                }
-            }
+        s.each {
+            buildParallelMap.put(s.name, prepareOneBuildStage(s.name))
         }
         buildStagesList.add(buildParallelMap)
     }
-
-
-    println(buildStagesList.dump())
     return buildStagesList
-//   def buildStagesList = []
-
-//   for (i=1; i<5; i++) {
-//     def buildParallelMap = [:]
-//     for (name in [ 'one', 'two', 'three' ] ) {
-//       def n = "${name} ${i}"
-//       buildParallelMap.put(n, prepareOneBuildStage(n))
-//     }
-//     buildStagesList.add(buildParallelMap)
-//   }
-//   return buildStagesList
 }
 
 def prepareOneBuildStage(String name) {
@@ -165,6 +138,8 @@ def prepareOneBuildStage(String name) {
     }
   }
 }
+
+
 
 // def calling(ProjectConfiguration projectConfig, def dockerImage) {
 //     return { variables ->
