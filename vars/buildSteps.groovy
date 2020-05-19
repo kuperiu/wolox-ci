@@ -88,7 +88,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                     def branchedStages = [:]
                     stage(myStage.name) {
                         for (myStep in myStage.steps) {
-                            test = stepA["${myStep}"]
+                            test = stepsA["${myStep}"]
                             stage(test) {
                                 sh "sleep 1"
                             }
