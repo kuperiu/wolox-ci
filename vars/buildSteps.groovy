@@ -90,6 +90,8 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                         for (myStep in myStage.steps) {
                             for (s in stepsA) {
                                 if (myStep == s.name) {
+                                    pritnln("#########")
+                                    println(s.dump())
                                     parallelSteps["${myStep}"] = {
                                         stage(myStep) {
                                             docker.image(s.image).inside("--entrypoint=''") {
