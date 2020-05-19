@@ -33,8 +33,7 @@ class ConfigParser {
         }
 
         // parse the execution steps
-       // projectConfiguration.steps = parseSteps(yaml.steps);
-       print yaml.stages.dump()
+        projectConfiguration.steps = parseSteps(yaml.steps);
         projectConfiguration.stages = parseStages(yaml.stages);
         projectConfiguration.secrets = parseSecrets(yaml.secrets);
 
@@ -83,12 +82,11 @@ class ConfigParser {
 
     static def parseStages(def yamlStages) {
         List<Stage> stages = yamlStages.collect { k, v ->
-             List<Step> steps = v.collect { i, j ->
-             Step step = new Step(name: i, image: j.image) 
-                return step
-             }
-            Stage stage = new Stage(name: k, steps: steps) 
-            return stage
+            Stage stage = new Stage(name: k)
+            v.each {
+                it.steps.add(it)
+            }
+            return step
         }
 
         return new Stages(stages: stages);

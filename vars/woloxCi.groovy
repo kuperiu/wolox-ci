@@ -23,7 +23,6 @@ def call(String yamlName) {
  projectConfig.stages.stages.each {
     print it.name
     it.each { lior ->
-        print lior.dump()
         print lior
     }
 }
