@@ -24,13 +24,11 @@ def prepareBuildStages(sta, steps) {
     sta.steps.each { stepName ->
         def buildParallelMap = [:]
         steps.each { s ->
-            println("stepName")
-             println(stepName)
-             println(s.name)
             if (s.name == stepName) {
                 buildParallelMap.put(stepName, prepareOneBuildStage(stepName))
             }
         }
+        buildStagesList.add(buildParallelMap)
     }
 
     return buildStagesList
