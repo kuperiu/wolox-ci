@@ -47,13 +47,12 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         withEnv(secretList) {
             node(label) {
                 stage('Initialise') {
-                    println(stagesA.dump())
                     buildStages = prepareBuildStages(stagesA, stepsA)
                     println("Initialised pipeline.")
                 }
 
                 for (builds in buildStages) {
-                    build.call()
+                    builds.call()
                 }
             }
 // node('master') {
@@ -106,10 +105,9 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
 def prepareBuildStages(stages, steps) {
     def buildStagesList = []
 
-    stages.each { stage ->
-        def buildParallelMap = [:]
-        
-        buildStagesList.add(stage)
+    stages.each { stageName, stageSteps ->
+        println(stageName)
+        println(stageSteps)
     }
 
     return buildStagesList
