@@ -18,6 +18,30 @@ def vault(service, path, key) {
     }
 }
 
+// Create List of build stages to suit
+def prepareBuildStages() {
+  def buildStagesList = []
+
+  for (i=1; i<5; i++) {
+    def buildParallelMap = [:]
+    for (name in [ 'one', 'two', 'three' ] ) {
+      def n = "${name} ${i}"
+      buildParallelMap.put(n, prepareOneBuildStage(n))
+    }
+    buildStagesList.add(buildParallelMap)
+  }
+  return buildStagesList
+}
+
+def prepareOneBuildStage(String name) {
+  return {
+    stage("Build stage:${name}") {
+      println("Building ${name}")
+      sh(script:'sleep 5', returnStatus:true)
+    }
+  }
+}
+
 def call(ProjectConfiguration projectConfig, def dockerImage) {
     return { variables ->
         List<Stage> stagesA = projectConfig.stages.stages
@@ -34,6 +58,15 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         def runParallel = true
         def buildStages
 
+        withEnv(secretList) {
+            node() {
+                stage('Initialise') {
+                    // Set up List<Map<String,Closure>> describing the builds
+                    buildStages = prepareBuildStages()
+                    println("Initialised pipeline.")
+                }
+            }
+        }
     }
 }
         // withEnv(secretList) {
