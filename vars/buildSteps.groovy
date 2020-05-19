@@ -40,10 +40,6 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                     stage(sta.name) {
                         sta.steps.each { stepName ->
                             println(stepName)
-                            buildStages = prepareBuildStages()
-                            for (builds in buildStages) {
-                                parallel(builds)
-                            }
                         }
                     }
                 }
