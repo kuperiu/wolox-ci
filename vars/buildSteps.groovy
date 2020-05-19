@@ -93,7 +93,8 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                 test = s
                                 if (myStep == test.name) {
                                     echo "#########"
-                                    println(test.dump())
+                                    println(test.name
+                                    echo "ppppppppppp"
                                     parallelSteps["${test.name}"] = {
                                         stage(test.name) {
                                            echo test.name
