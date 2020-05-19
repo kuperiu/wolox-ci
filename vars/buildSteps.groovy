@@ -75,20 +75,29 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         def runParallel = true
         def buildStages
 
-node {
-  stage('CI') {
-    doDynamicParallelSteps()
-  }
-}
+        withEnv(secretList) {
+            node(label) {                
+                for (myStage in stagesA) {                
+                    stage(myStage.name) {
+                        parallelSteps = [:]
+                        for (myStep in myStage.steps) {
+                            for (s in stepsA) {
+                                if (myStep == s.name) {
+                                    parallelSteps["Branch_${myStep}"] = {
+                                        stage("${myStep}") {
+                                           echo "${myStep}"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                     parallel(parallelSteps)
+                     parallelSteps.clear()
+                    }
 
-
-
-
-
-
-
-
-
+                }
+            }
+        }
     }
 }
         // withEnv(secretList) {
@@ -258,16 +267,3 @@ node {
 //     }
 // }
 
-def doDynamicParallelSteps(){
-  tests = [:]
-  for (f in ["Branch_1", "Branch_2", "Branch_3"]) {
-    tests["${f}"] = {
-      node {
-        stage("${f}") {
-          echo f
-        }
-      }
-    }
-  }
-  parallel tests
-}
