@@ -93,9 +93,8 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                     parallelSteps["${myStep}"] = {
                                         stage(myStep) {
                                             docker.image(s.image).inside("--entrypoint=''") {
-                                                s.commands.each { command ->
-                                                    println(myStep)
-                                                    println(command)
+                                                for command in s.commands {
+                                                    sh command
                                                 }
                                             }
                                         }
