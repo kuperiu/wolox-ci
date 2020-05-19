@@ -85,6 +85,9 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                 stagesA.each { s ->
                     stage(s.name) {
                         buildStages = prepareBuildStages(s, stepsA)
+                        for (builds in buildStages) {
+                            parallel(builds)
+                        }
                     }
                 }
 
