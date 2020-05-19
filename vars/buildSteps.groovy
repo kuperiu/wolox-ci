@@ -76,29 +76,16 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         def buildStages
 
         withEnv(secretList) {
-            node(label) {
-                stage('Start') {
-                    // Set up List<Map<String,Closure>> describing the builds
-                 //   buildStages = prepareBuildStages(stagesA, stepsA)
-                    println("Initialised pipeline.")
-                }
-
-                
-                for (myStage in stagesA) {
-                    
+            node(label) {                
+                for (myStage in stagesA) {                
                     stage(myStage.name) {
                         def parallelSteps = [:]
                         for (myStep in myStage.steps) {
                             for (s in stepsA) {
-                                test = s
-                                if (myStep == test.name) {
-                                    echo "#########"
-                                    println(test.name)
-                                    echo test.getCommands().dump()
-                                    echo "ppppppppppp"
+                                if (myStep == s.name) {
                                     parallelSteps["${myStep}"] = {
-                                        stage(test.name) {
-                                           echo myStep
+                                        stage(s.name) {
+                                           echo s.name
                                         }
                                     }
                                 }
@@ -108,11 +95,6 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                      parallelSteps.clear()
                     }
 
-                }
-
-
-                stage('Finish') {
-                    println('Build complete.')
                 }
             }
         }
