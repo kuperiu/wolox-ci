@@ -127,13 +127,8 @@ def getStep(Steps steps, String name) {
 def prepareBuildStages(steps, stepName) {
     def buildStagesList = []
     steps.each { s ->
-        if (s.name == stepName) {
-            def buildParallelMap = [:]
-            s.each {
-                buildParallelMap.put(s.name, prepareOneBuildStage(s.name))
-            }
-            buildStagesList.add(buildParallelMap)
-            }
+        println("######")
+        println(s.name)
     }
     return buildStagesList
 }
