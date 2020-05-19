@@ -39,7 +39,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                 stagesA.each { sta ->
                     stage(sta.name) {
                         sta.steps.each { stepName ->
-                            println(stepName)
+                            parallel(prepareOneBuildStage(stepName))
                         }
                     }
                 }
