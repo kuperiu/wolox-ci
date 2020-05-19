@@ -91,7 +91,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                 }
                             }
                         }
-                     parallel(parallelSteps)
+                     parallel(parallelSteps.sort())
                      parallelSteps.clear()
                     }
 
