@@ -106,8 +106,11 @@ def prepareBuildStages(stages, steps) {
     def buildStagesList = []
 
     stages.each { stage ->
-        println(stage.name)
-         println(stage.steps)
+        stage.steps.each {
+            step = getStep(steps, it)
+            println(step.name)
+            println(step.commands)
+        }
     }
 
     return buildStagesList
