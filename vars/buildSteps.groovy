@@ -105,8 +105,10 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
 def prepareBuildStages(stages) {
     def buildStagesList = []
 
-    stages.each {
-        buildStagesList.add(it)
+    stages.each { stage ->
+        def buildParallelMap = [:]
+        print stage
+        buildStagesList.add(stage)
     }
 
     return buildStagesList
