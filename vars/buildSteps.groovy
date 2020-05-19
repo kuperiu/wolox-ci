@@ -75,28 +75,24 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         def runParallel = true
         def buildStages
 
-node() {
-stage("Some Stage") {
-    // Stuff ...
+node {
+  stage('CI') {
+    doDynamicParallelSteps()
+  }
 }
-stage("Parallel Work Stage") {
-    // Prealocate dict/map of branchstages
-    def branchedStages = [:]
-    // Loop through all parallel branched stage names
-    for (STAGE_NAME in ["Branch_1", "Branch_2", "Branch_3"]) {
-        // Define and add to stages dict/map of parallel branch stages
-        branchedStages["${STAGE_NAME}"] = {
-            stage("Parallel Branch Stage: ${STAGE_NAME}") {
-                // Parallel stage work here
-                echo STAGE_NAME
-            }
+
+def doDynamicParallelSteps(){
+  tests = [:]
+  for (f in ["Branch_1", "Branch_2", "Branch_3"])) {
+    tests["${f}"] = {
+      node {
+        stage("${f}") {
+          echo '${f}'
         }
+      }
     }
-    parallel branchedStages
-}
-stage("Some Other Stage") {
-    // Other stuff ...
-}
+  }
+  parallel tests
 }
 
 
