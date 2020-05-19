@@ -50,6 +50,10 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                     buildStages = prepareBuildStages()
                     println("Initialised pipeline.")
                 }
+
+                for (builds in buildStages) {
+                    build.call()
+                }
             }
 // node('master') {
 //   stage('Initialise') {
