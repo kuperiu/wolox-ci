@@ -41,32 +41,79 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
 
         label = "team_a"
         def links = '--entrypoint=""'
+        def runParallel = true
+        def buildStages
 
         withEnv(secretList) {
-            stagesA.each { s ->
-                node(label) {
-                    stage(s.name) {
-                        s.steps.each {
-                            def step = getStep(stepsA, it)
-                            parallel (
-                                "${step.name}": {
-                                    node(label) {
-                                        docker.image(step.image).inside("--entrypoint=''")  {
-                                            step.commands.each { command ->
-                                                sh command
-                                            }
-                                        }   
-                                    }
-                                }
-                            )
-                        }
-                    }
-                }
-            }
+node('master') {
+  stage('Initialise') {
+    // Set up List<Map<String,Closure>> describing the builds
+    buildStages = prepareBuildStages()
+    println("Initialised pipeline.")
+  }
+
+  for (builds in buildStages) {
+    if (runParallel) {
+      parallel(builds)
+    } else {
+      // run serially (nb. Map is unordered! )
+      for (build in builds.values()) {
+        build.call()
+      }
+    }
+  }
+
+  stage('Finish') {
+      println('Build complete.')
+  }
+}
+            // stagesA.each { s ->
+            //     node(label) {
+            //         stage(s.name) {
+            //             s.steps.each {
+            //                 def step = getStep(stepsA, it)
+            //                 // parallel (
+            //                 //     "${step.name}": {
+            //                 //         node(label) {
+            //                 //             docker.image(step.image).inside("--entrypoint=''")  {
+            //                 //                 step.commands.each { command ->
+            //                 //                     sh command
+            //                 //                 }
+            //                 //             }   
+            //                 //         }
+            //                 //     }
+            //                 // )
+            //             }
+            //         }
+            //     }
+            // }
         }
     }
 }
 
+// Create List of build stages to suit
+def prepareBuildStages() {
+  def buildStagesList = []
+
+  for (i=1; i<5; i++) {
+    def buildParallelMap = [:]
+    for (name in [ 'one', 'two', 'three' ] ) {
+      def n = "${name} ${i}"
+      buildParallelMap.put(n, prepareOneBuildStage(n))
+    }
+    buildStagesList.add(buildParallelMap)
+  }
+  return buildStagesList
+}
+
+def prepareOneBuildStage(String name) {
+  return {
+    stage("Build stage:${name}") {
+      println("Building ${name}")
+      sh(script:'sleep 5', returnStatus:true)
+    }
+  }
+}
 
 def calling(ProjectConfiguration projectConfig, def dockerImage) {
     return { variables ->
