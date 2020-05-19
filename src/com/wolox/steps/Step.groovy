@@ -10,4 +10,8 @@ class Step {
         this.image = image
         this.commands = commands
     }
+
+    def getCommands() {
+        return this.commands
+    }
 }

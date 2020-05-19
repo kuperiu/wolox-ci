@@ -94,6 +94,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                 if (myStep == test.name) {
                                     echo "#########"
                                     println(test.name)
+                                    echo test.getCommands
                                     echo "ppppppppppp"
                                     parallelSteps["${myStep}"] = {
                                         stage(test.name) {
