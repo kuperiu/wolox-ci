@@ -84,8 +84,8 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                             for (s in stepsA) {
                                 if (myStep == s.name) {
                                     parallelSteps["${myStep}"] = {
-                                        stage(myStep) {
-                                           echo myStep
+                                        stage("${myStep}") {
+                                           echo "${myStep}"
                                         }
                                     }
                                 }
