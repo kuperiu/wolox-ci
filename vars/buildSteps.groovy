@@ -89,9 +89,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                     stage(myStage.name) {
                         for (myStep in myStage.steps) {
                             test = stepsA["${myStep}"]
-                            stage(test) {
-                                sh "sleep 1"
-                            }
+                            println(test.dump())
                         }
                     }
                 }
