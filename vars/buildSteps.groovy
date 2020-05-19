@@ -70,10 +70,14 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                     buildStages = prepareBuildStages(stagesA, stepsA)
                     println("Initialised pipeline.")
                 }
-
+                
                  for (builds in buildStages) {
                      parallel(builds)
                  }
+
+                stage('Finish') {
+                    println('Build complete.')
+                }
             }
         }
     }
