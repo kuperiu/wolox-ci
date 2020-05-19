@@ -85,16 +85,21 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
 
                 
                 for (myStage in stagesA) {
-                    def branchedStages = [:]
+                    def parallelSteps = [:]
                     stage(myStage.name) {
                         for (myStep in myStage.steps) {
                             for (s in stepsA) {
                                 if (myStep == s.name) {
-                                    println("found")
+                                    parallelSteps["${myStep}"] = {
+                                        stage(myStep) {
+                                            sh "sleep 10"
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
+                    parallel(parallelSteps)
                 }
 
 
