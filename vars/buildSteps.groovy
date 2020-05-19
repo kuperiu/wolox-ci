@@ -86,7 +86,6 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                 if (item.name == myStep) {
                                     parallelSteps["${myStep}"] = {
                                          echo "${myStep}"
-                                         echo i
                                     }
                                 }
                             }
@@ -99,11 +98,12 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                             //         }
                             //     }
                             // }
+                                                 parallel(parallelSteps)
+                     parallelSteps.clear()
                         }
 
                     }
-                     parallel(parallelSteps)
-                     parallelSteps.clear()
+
                 }
             }
         }
