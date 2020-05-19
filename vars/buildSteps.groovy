@@ -39,16 +39,18 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                 stagesA.each { s ->
                     parallel 'linux': {
                         stage('Linux') {
-                           println("eeee")
+                            /* .. Your code/scripts .. */
                         }
                     }, 'windows': {
                         stage('Windows') {
-                             println("ddddd")
+                            /* .. Your code/scripts .. */
                         }
                     }
                 }
             }
         }
+    }
+}
         // withEnv(secretList) {
         //     node() {
         //         stagesA.each { s ->
@@ -162,63 +164,63 @@ def prepareOneBuildStage(String name) {
   }
 }
 
-def calling(ProjectConfiguration projectConfig, def dockerImage) {
-    return { variables ->
-        List<Step> stepsA = projectConfig.steps.steps
-        List<Secret> secrets = projectConfig.secrets.secrets
-        def secretList = []
-        secrets.each { secret ->
-           mySecret = vault(secret.service, secret.path, secret.key)
-           secretList << "${secret.name}=${mySecret}"
-        } 
+// def calling(ProjectConfiguration projectConfig, def dockerImage) {
+//     return { variables ->
+//         List<Step> stepsA = projectConfig.steps.steps
+//         List<Secret> secrets = projectConfig.secrets.secrets
+//         def secretList = []
+//         secrets.each { secret ->
+//            mySecret = vault(secret.service, secret.path, secret.key)
+//            secretList << "${secret.name}=${mySecret}"
+//         } 
 
 
-        //def links = variables.collect { k, v -> "--entrypoint="" --link ${v.id}:${k}" }.join(" ")
-        label = "team_a"
-        def links = '--entrypoint=""'
-        withEnv(secretList) {
-            stepsA.each { step ->
-                node(label) {
-                    stage "Start"
-                    parallel (
-                        "${step.name}": {
-                            node(label) {
-                                docker.image(step.image).inside("--entrypoint=''")  {
-                                     step.commands.each { command ->
-                                        sh command
-                                     }
-                                }   
-                            }
-                        }
-//   'Build' : {
-//     node {
-//       git url: 'http://github.com/karlkfi/minitwit'
-//       sh 'ci/build.sh'
+//         //def links = variables.collect { k, v -> "--entrypoint="" --link ${v.id}:${k}" }.join(" ")
+//         label = "team_a"
+//         def links = '--entrypoint=""'
+//         withEnv(secretList) {
+//             stepsA.each { step ->
+//                 node(label) {
+//                     stage "Start"
+//                     parallel (
+//                         "${step.name}": {
+//                             node(label) {
+//                                 docker.image(step.image).inside("--entrypoint=''")  {
+//                                      step.commands.each { command ->
+//                                         sh command
+//                                      }
+//                                 }   
+//                             }
+//                         }
+// //   'Build' : {
+// //     node {
+// //       git url: 'http://github.com/karlkfi/minitwit'
+// //       sh 'ci/build.sh'
+// //     }
+// //   },
+// //   'Test' : {
+// //     node {
+// //       git url: 'http://github.com/karlkfi/minitwit'
+// //       sh 'ci/test-unit.sh'
+// //     }
+// //   }
+//                         // stage(step.name) {
+//                         //     // def customImage = docker.image(step.image)
+//                         //         docker.image(step.image).inside("--entrypoint=''")  {
+//                         //             step.commands.each { command ->
+//                         //                 sh command
+//                         //             }
+//                         //         }
+//                         //     }
+//                     )
+// node(label) {
+//     stage 'middle' {
+
 //     }
-//   },
-//   'Test' : {
-//     node {
-//       git url: 'http://github.com/karlkfi/minitwit'
-//       sh 'ci/test-unit.sh'
+// }
+//                 }
+//             }
+//         }
 //     }
-//   }
-                        // stage(step.name) {
-                        //     // def customImage = docker.image(step.image)
-                        //         docker.image(step.image).inside("--entrypoint=''")  {
-                        //             step.commands.each { command ->
-                        //                 sh command
-                        //             }
-                        //         }
-                        //     }
-                    )
-node(label) {
-    stage 'middle' {
-
-    }
-}
-                }
-            }
-        }
-    }
-}
+// }
 
