@@ -81,7 +81,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                     stage(myStage.name) {
                         parallelSteps = [:]
                         for (myStep in myStage.steps) {
-                            stepsA.each { item, i ->
+                            stepsA.eachWithIndex { item, i ->
                                 int index=i, branch = i+1
                                 if (item.name == myStep) {
                                     parallelSteps["Branch_${myStep}"] = {
