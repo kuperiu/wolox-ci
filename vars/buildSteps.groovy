@@ -36,8 +36,8 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
 
         withEnv(secretList) {
             node() {
-                stagesA.each { s ->
-                    stage(s.name) {
+                stagesA.each { sta ->
+                    stage(sta.name) {
                         // stage.steps.each { step ->
                         //     step.
                         // }
