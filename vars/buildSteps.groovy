@@ -92,7 +92,11 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                 if (myStep == s.name) {
                                     parallelSteps["${myStep}"] = {
                                         stage(myStep) {
-                                            sh "sleep 10"
+                                            docker.image(s.image).inside("--entrypoint=''") {
+                                                s.commands.each { command ->
+                                                    sh command
+                                                }
+                                            }
                                         }
                                     }
                                 }
