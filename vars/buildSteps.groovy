@@ -84,7 +84,9 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                 }
 
                 for (s in stagesA) {
-                    println(s.name)
+                    stage(s.name) {
+                        println("dd")
+                    }
                 }
 
 
