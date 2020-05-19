@@ -18,16 +18,6 @@ def vault(service, path, key) {
     }
 }
 
-def getStep(Steps steps, String name) {
-    Step step = new Step()
-    steps.each { k, v ->
-        if (k == name) {
-            step.set(k, v.image, v.commands)
-        }
-    }
-    return step
-}
-
 def call(ProjectConfiguration projectConfig, def dockerImage) {
     return { variables ->
         List<Stage> stagesA = projectConfig.stages.stages
@@ -101,15 +91,23 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
     }
 }
 
+def getStep(Steps steps, String name) {
+    Step step = new Step()
+    steps.each { k, v ->
+        if (k == name) {
+            step.set(k, v.image, v.commands)
+        }
+    }
+    return step
+}
+
 // Create List of build stages to suit
 def prepareBuildStages(stages, steps) {
     def buildStagesList = []
 
     stages.each { stage ->
         stage.steps.each {
-            step = getStep(steps, it)
-            println(step.name)
-            println(step.commands)
+            println(it)
         }
     }
 
