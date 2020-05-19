@@ -94,7 +94,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                     //  parallel(parallelSteps)
                      parallelSteps.each { k, v ->
                      println(k)
-                     println(v)
+                     println(v.dump())
                        }
                     }
 
