@@ -108,9 +108,8 @@ def prepareBuildStages(stages, steps) {
     stages.each { stage ->
         stage.steps.each { stepName ->
             steps.each { step ->
-                println("^^^^^^^")
-                println(step.name)
-                println(step.commands)
+                def buildParallelMap = [:]
+                 buildParallelMap.put(stage.name, prepareOneBuildStage(stepName))
             }
         }
     }
