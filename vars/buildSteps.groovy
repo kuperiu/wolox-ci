@@ -4,7 +4,7 @@ import com.wolox.*;
 //import com.wolox.steps.Stage;
 import com.wolox.steps.*;
 import com.wolox.secrets.Secret;
-import Math
+
 
 def vault(service, path, key) { 
     node('team_a') {
