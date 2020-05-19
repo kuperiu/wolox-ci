@@ -4,4 +4,10 @@ class Step {
     List<String> commands = [];
     String name;
     String image;
+
+    def set(String name, String image, List<String> commands) {
+        this.name = name
+        this.image = image
+        this.commands = commands
+    }
 }

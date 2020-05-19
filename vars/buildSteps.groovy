@@ -21,6 +21,7 @@ def vault(service, path, key) {
 def call(ProjectConfiguration projectConfig, def dockerImage) {
     return { variables ->
         List<Stage> stagesA = projectConfig.stages.stages
+        List<Step> stepsA = projectConfig.steps.steps
         List<Secret> secrets = projectConfig.secrets.secrets
         def secretList = []
         secrets.each { secret ->
@@ -34,8 +35,9 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         withEnv(secretList) {
             stagesA.each { stage ->
                 node(label) {
-                    stage "${stage}" {
-                        stage.each { step ->
+                    stage "${stage.name}" {
+                        stage.steps.each { step ->
+                            step = commands getStep(stepsA, step.name)
                             parallel (
                                 "${step.name}": {
                                     node(label) {
@@ -55,6 +57,15 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
     }
 }
 
+def getStep(Steps steps, String name) {
+    Step step = new Step()
+    steps.each { k, v ->
+        if k == name {
+            step.set(k, v.image, v.commands)
+        }
+    }
+    return step
+}
 def calling(ProjectConfiguration projectConfig, def dockerImage) {
     return { variables ->
         List<Step> stepsA = projectConfig.steps.steps

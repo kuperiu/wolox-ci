@@ -12,23 +12,7 @@ def call(String yamlName) {
     ProjectConfiguration projectConfig = ConfigParser.parse(yaml, env);
 
     def imageName = projectConfig.dockerConfiguration.imageName().toLowerCase();
-    print yaml.stages.dump()
-    print "!!!!!!!!!"
-    print  projectConfig.stages.dump()
-    print  projectConfig.secrets.dump()
 
- projectConfig.secrets.secrets.each { s ->
-    print s.name
-}
- projectConfig.steps.steps.each {
-    print it.name
-    it.each { k, v ->
-        print k
-        v.commands.each { l ->
-            print l
-        }
-    }
-}
     // build the image specified in the configuration
    //def customImage = docker.build(imageName, "--file ${projectConfig.dockerfile} .");
     // println "ls -l".execute().text
