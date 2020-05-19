@@ -5,7 +5,6 @@ import com.wolox.*;
 import com.wolox.steps.*;
 import com.wolox.secrets.Secret;
 
-
 def vault(service, path, key) { 
     node('team_a') {
         withEnv(["VAULT_ADDR=https://this.vault.dazn-dev.com", "VAULT_NAMESPACE=${service}"]) {
@@ -78,34 +77,29 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
 
         withEnv(secretList) {
             node(label) {                
-                for (myStage in stagesA) {   
-                    parallelSteps = [:]             
+                for (myStage in stagesA) {                
                     stage(myStage.name) {
-                        
+                        def parallelSteps = [:]
                         for (myStep in myStage.steps) {
-                            stepsA.eachWithIndex { item, i ->
-                                
-                                if (item.name == myStep) {
-                                    int index=i, branch = Math.random()
+                            for (s in stepsA) {
+                                if (myStep == s.name) {
                                     parallelSteps["${myStep}"] = {
-                                         echo "${myStep}"
+                                        stage(s.name) {
+                                           echo s.name
+                                        }
                                     }
                                 }
                             }
-                            // for (s in stepsA) {
-                            //     if (myStep == s.name) {
-                            //         parallelSteps["Branch_${myStep}"] = {
-                            //             stage("${myStep}") {
-                            //                echo "${myStep}"
-                            //             }
-                            //         }
-                            //     }
-                            // }
                         }
                      parallel(parallelSteps)
                      parallelSteps.clear()
                     }
 
+                }
+
+
+                stage('Finish') {
+                    println('Build complete.')
                 }
             }
         }
