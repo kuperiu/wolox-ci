@@ -67,15 +67,13 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
             node() {
                 stage('Initialise') {
                     // Set up List<Map<String,Closure>> describing the builds
-                    buildStages = prepareBuildStages(stagesA, stepsA)
+                 //   buildStages = prepareBuildStages(stagesA, stepsA)
                     println("Initialised pipeline.")
                 }
 
-                stagesA.each { ste ->
-                    stage(ste.name) {
-                        for (builds in buildStages) {
-                            parallel(builds)
-                        }
+                stagesA.each { s ->
+                    stage(s.name) {
+                        buildStages = prepareBuildStages(stagesA, stepsA)
                     }
                 }
 
