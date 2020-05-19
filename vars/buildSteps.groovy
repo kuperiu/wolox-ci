@@ -110,7 +110,7 @@ def prepareBuildStages(stages, steps) {
             def buildParallelMap = [:]
             steps.each { step ->
                 if (step.name == stepName) {
-                    buildParallelMap.put(n, prepareOneBuildStage(stepName))
+                    buildParallelMap.put(stage.name, prepareOneBuildStage(stepName))
                 }
             }
         }
