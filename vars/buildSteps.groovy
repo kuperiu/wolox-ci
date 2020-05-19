@@ -24,7 +24,7 @@ def prepareBuildStages(stages, steps) {
         println(sta.name)
         println(sta.steps)
         sta.steps.each { stepName ->
-            println(ste.name)
+            println(stepName)
             // steps.each {
             //     if (sta.name == ste.name) {
             //         println(ste.name)
