@@ -36,9 +36,12 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
 
         withEnv(secretList) {
             node() {
-                stagesA.each { s ->
-                    stage(s.name) {
-
+                stagesA.each { stage ->
+                    stage(stage.name) {
+                        // stage.steps.each { step ->
+                        //     step.
+                        // }
+                        // prepareBuildStages(steps, )
                     }
                 }
             }
@@ -121,11 +124,13 @@ def getStep(Steps steps, String name) {
 def prepareBuildStages(steps, stepName) {
     def buildStagesList = []
     steps.each { s ->
-        def buildParallelMap = [:]
-        s.each {
-            buildParallelMap.put(s.name, prepareOneBuildStage(s.name))
-        }
-        buildStagesList.add(buildParallelMap)
+        if (s.name == stepName) {
+            def buildParallelMap = [:]
+            s.each {
+                buildParallelMap.put(s.name, prepareOneBuildStage(s.name))
+            }
+            buildStagesList.add(buildParallelMap)
+            }
     }
     return buildStagesList
 }
