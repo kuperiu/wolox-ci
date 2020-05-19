@@ -83,7 +83,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                         for (myStep in myStage.steps) {
                             stepsA.eachWithIndex { item, i ->
                                 if (myStep == item.name) {
-                                    int index=i, branch = i+1
+                                    int index=Math.random(), branch = i+1
                                     parallelSteps["${myStep}"] = {
                                         echo myStep
                                     }
