@@ -75,11 +75,10 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         def runParallel = true
         def buildStages
 
+node() {
 stage("Some Stage") {
     // Stuff ...
 }
-
-
 stage("Parallel Work Stage") {
     // Prealocate dict/map of branchstages
     def branchedStages = [:]
@@ -95,11 +94,17 @@ stage("Parallel Work Stage") {
     }
     parallel branchedStages
 }
-
-
 stage("Some Other Stage") {
     // Other stuff ...
 }
+}
+
+
+
+
+
+
+
     }
 }
         // withEnv(secretList) {
