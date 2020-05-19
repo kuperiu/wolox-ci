@@ -45,28 +45,34 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         def buildStages
 
         withEnv(secretList) {
-node('master') {
-  stage('Initialise') {
-    // Set up List<Map<String,Closure>> describing the builds
-    buildStages = prepareBuildStages()
-    println("Initialised pipeline.")
-  }
+            node(label) {
+                stage('Initialise') {
+                    buildStages = prepareBuildStages()
+                    println("Initialised pipeline.")
+                }
+            }
+// node('master') {
+//   stage('Initialise') {
+//     // Set up List<Map<String,Closure>> describing the builds
+//     buildStages = prepareBuildStages()
+//     println("Initialised pipeline.")
+//   }
 
-  for (builds in buildStages) {
-    if (runParallel) {
-      parallel(builds)
-    } else {
-      // run serially (nb. Map is unordered! )
-      for (build in builds.values()) {
-        build.call()
-      }
-    }
-  }
+//   for (builds in buildStages) {
+//     if (runParallel) {
+//       parallel(builds)
+//     } else {
+//       // run serially (nb. Map is unordered! )
+//       for (build in builds.values()) {
+//         build.call()
+//       }
+//     }
+//   }
 
-  stage('Finish') {
-      println('Build complete.')
-  }
-}
+//   stage('Finish') {
+//       println('Build complete.')
+//   }
+// }
             // stagesA.each { s ->
             //     node(label) {
             //         stage(s.name) {
@@ -92,18 +98,25 @@ node('master') {
 }
 
 // Create List of build stages to suit
-def prepareBuildStages() {
-  def buildStagesList = []
+def prepareBuildStages(stages) {
+    def buildStagesList = []
 
-  for (i=1; i<5; i++) {
-    def buildParallelMap = [:]
-    for (name in [ 'one', 'two', 'three' ] ) {
-      def n = "${name} ${i}"
-      buildParallelMap.put(n, prepareOneBuildStage(n))
+    stages.each {
+        buildStagesList.add(it)
     }
-    buildStagesList.add(buildParallelMap)
-  }
-  return buildStagesList
+
+    return buildStagesList
+//   def buildStagesList = []
+
+//   for (i=1; i<5; i++) {
+//     def buildParallelMap = [:]
+//     for (name in [ 'one', 'two', 'three' ] ) {
+//       def n = "${name} ${i}"
+//       buildParallelMap.put(n, prepareOneBuildStage(n))
+//     }
+//     buildStagesList.add(buildParallelMap)
+//   }
+//   return buildStagesList
 }
 
 def prepareOneBuildStage(String name) {
