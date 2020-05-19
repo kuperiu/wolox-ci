@@ -97,8 +97,6 @@ stage("Parallel Work Stage") {
         }
 
     }
-
-    // Execute the stages in parallel
     parallel branchedStages
 }
 
