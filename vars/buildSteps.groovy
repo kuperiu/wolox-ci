@@ -47,6 +47,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         withEnv(secretList) {
             node(label) {
                 stage('Initialise') {
+                    println(stagesA)
                     buildStages = prepareBuildStages()
                     println("Initialised pipeline.")
                 }
@@ -102,12 +103,12 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
 }
 
 // Create List of build stages to suit
-def prepareBuildStages(stages) {
+def prepareBuildStages(stages, steps) {
     def buildStagesList = []
 
     stages.each { stage ->
         def buildParallelMap = [:]
-        print stage
+        
         buildStagesList.add(stage)
     }
 
