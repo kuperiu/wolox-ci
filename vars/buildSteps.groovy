@@ -77,15 +77,22 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
 
         withEnv(secretList) {
             node() {
-                stage('Initialise') {
+                stage('Start') {
                     // Set up List<Map<String,Closure>> describing the builds
                  //   buildStages = prepareBuildStages(stagesA, stepsA)
                     println("Initialised pipeline.")
                 }
 
-                for (s in stagesA) {
-                    stage(s.name) {
-                        println("dd")
+                
+                for (myStage in stagesA) {
+                    def branchedStages = [:]
+                    stage(myStage.name) {
+                        for (myStep in s.steps) {
+                            test = stepA["${myStep}"]
+                            stage(test) {
+                                sh "sleep 1"
+                            }
+                        }
                     }
                 }
 
