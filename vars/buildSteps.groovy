@@ -77,9 +77,10 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
 
         withEnv(secretList) {
             node(label) {                
-                for (myStage in stagesA) {                
+                for (myStage in stagesA) {     
+                    parallelSteps = [:]           
                     stage(myStage.name) {
-                        parallelSteps = [:]
+                        
                         for (myStep in myStage.steps) {
                             stepsA.eachWithIndex { item, i ->
                                 int index=i, branch = i+1
@@ -99,10 +100,10 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                             //     }
                             // }
                         }
+
+                    }
                      parallel(parallelSteps)
                      parallelSteps.clear()
-                    }
-
                 }
             }
         }
