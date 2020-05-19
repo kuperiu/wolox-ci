@@ -36,14 +36,11 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
 
         withEnv(secretList) {
             node() {
-                stagesA.each { sta ->
-                    stage(sta.name) {
-                        sta.steps.each { stepName ->
-                            prepareOneBuildStage(stepsA, stepName)
-                        }
-                    }
+                stage('Initialise') {
+                    // Set up List<Map<String,Closure>> describing the builds
+                    buildStages = prepareBuildStages(stagesA, stepsA)
+                    println("Initialised pipeline.")
                 }
-            }
         }
     }
 }
@@ -120,11 +117,16 @@ def getStep(Steps steps, String name) {
 }
 
 // Create List of build stages to suit
-def prepareBuildStages(steps, stepName) {
-    steps.each { s ->
-        if (s.name == stepName) {
-            println(stepName)
-        }
+def prepareBuildStages(stages, steps) {
+    stages.each { sta ->
+         def buildParallelMap = [:]
+         sta.steps.each { stepName ->
+            steps.each { ste ->
+                if (ste.name == stepName) {
+                    println(stepName)
+                }
+            }
+         }
     }
   def buildStagesList = []
   for (i=1; i<5; i++) {
