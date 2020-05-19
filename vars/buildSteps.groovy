@@ -20,11 +20,14 @@ def vault(service, path, key) {
 
 // Create List of build stages to suit
 def prepareBuildStages(stages, steps) {
+
     stages.each{ sta ->
         println(sta.name)
         println(sta.steps)
         sta.steps.each { stepName ->
-            println(stepName)
+            steps.each { ste ->
+                println(ste.name)
+            }
             // steps.each {
             //     if (sta.name == ste.name) {
             //         println(ste.name)
