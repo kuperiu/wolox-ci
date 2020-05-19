@@ -106,8 +106,8 @@ def prepareBuildStages(stages, steps) {
     def buildStagesList = []
 
     stages.each { stage ->
+        def buildParallelMap = [:]
         stage.steps.each { stepName ->
-            def buildParallelMap = [:]
             steps.each { step ->
                 if (step.name == stepName) {
                     buildParallelMap.put(stage.name, prepareOneBuildStage(stepName))
