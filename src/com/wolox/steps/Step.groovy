@@ -12,6 +12,6 @@ class Step {
     }
 
     def getCommands() {
-        return this.commands
+        return commands
     }
 }
