@@ -37,7 +37,16 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         withEnv(secretList) {
             node() {
                 stagesA.each { s ->
-                    println(s.name)
+                    parallel {
+                        s.name {
+                            stage('Linux') {
+                                println("linux")
+                            }
+                            stage('Windoes') {
+                                println("Windows")
+                            }
+                        }
+                    }
 
                 }
             }
