@@ -94,6 +94,8 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                         stage(myStep) {
                                             docker.image(s.image).inside("--entrypoint=''") {
                                                 s.commands.each { command ->
+                                                    println(myStep)
+                                                    println(command)
                                                     sh command
                                                 }
                                             }
