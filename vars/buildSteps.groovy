@@ -94,7 +94,7 @@ stage("Parallel Work Stage") {
         branchedStages["${STAGE_NAME}"] = {
             stage("Parallel Branch Stage: ${STAGE_NAME}") {
                 // Parallel stage work here
-                sh "sleep 10"
+                echo "${STAGE_NAME}"
             }
         }
 
