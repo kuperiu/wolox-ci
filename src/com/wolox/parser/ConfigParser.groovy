@@ -86,7 +86,7 @@ class ConfigParser {
             v.each {
                 stage.steps.add(it)
             }
-            return step
+            return stage
         }
 
         return new Stages(stages: stages);
