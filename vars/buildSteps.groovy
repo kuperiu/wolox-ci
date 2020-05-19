@@ -60,7 +60,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
 def getStep(Steps steps, String name) {
     Step step = new Step()
     steps.each { k, v ->
-        if k == name {
+        if (k == name) {
             step.set(k, v.image, v.commands)
         }
     }
