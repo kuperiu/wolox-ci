@@ -20,31 +20,21 @@ def vault(service, path, key) {
 
 // Create List of build stages to suit
 def prepareBuildStages(stages, steps) {
-
+    def buildStagesList = []
     stages.each{ sta ->
         println(sta.name)
         println(sta.steps)
         sta.steps.each { stepName ->
+            def buildParallelMap = [:]
             steps.each { ste ->
-                println(ste.name)
+                if (ste.name == stepName) {
+                    buildParallelMap.put(stepName, prepareOneBuildStage(stepName))
+                }
             }
-            // steps.each {
-            //     if (sta.name == ste.name) {
-            //         println(ste.name)
-            //     }
-            // }
+            buildStagesList.add(buildParallelMap)
         }
     }
-  def buildStagesList = []
-
-  for (i=1; i<5; i++) {
-    def buildParallelMap = [:]
-    for (name in [ 'one', 'two', 'three' ] ) {
-      def n = "${name} ${i}"
-      buildParallelMap.put(n, prepareOneBuildStage(n))
-    }
-    buildStagesList.add(buildParallelMap)
-  }
+  
   return buildStagesList
 }
 
