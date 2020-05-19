@@ -24,6 +24,7 @@ def call(String yamlName) {
     print it.name
     it.each { k, v ->
         print k
+        print v.dump()
         v.each { l ->
             print l
         }
