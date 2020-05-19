@@ -112,7 +112,7 @@ def prepareBuildStages(stages, steps) {
     }
 
     steps.each {
-        println(it)
+        println(it.name)
     }
 
     return buildStagesList
