@@ -85,8 +85,9 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
 
                 
                 for (myStage in stagesA) {
-                    def parallelSteps = [:]
+                    
                     stage(myStage.name) {
+                        def parallelSteps = [:]
                         for (myStep in myStage.steps) {
                             for (s in stepsA) {
                                 if (myStep == s.name) {
@@ -103,8 +104,9 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                     }
                                 }
                             }
+                            parallel(parallelSteps)
                         }
-                        parallel(parallelSteps)
+                        
                     }
                 }
 
