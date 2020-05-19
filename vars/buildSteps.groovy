@@ -39,11 +39,11 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                 stagesA.each { s ->
                     parallel 'linux': {
                         stage('Linux') {
-                            /* .. Your code/scripts .. */
+                           println("eeee")
                         }
                     }, 'windows': {
                         stage('Windows') {
-                            /* .. Your code/scripts .. */
+                             println("ddddd")
                         }
                     }
                 }
