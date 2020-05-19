@@ -22,9 +22,9 @@ def vault(service, path, key) {
 def prepareBuildStages(sta, steps) {
     def buildStagesList = []
     sta.steps.each { stepName ->
-        println(stepName)
         def buildParallelMap = [:]
         steps.each { s ->
+            println("stepName")
             if (s.name == stepName) {
                 buildParallelMap.put(stepName, prepareOneBuildStage(stepName))
             }
