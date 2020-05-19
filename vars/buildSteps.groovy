@@ -76,7 +76,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         def buildStages
 
         withEnv(secretList) {
-            node() {
+            node(label) {
                 stage('Start') {
                     // Set up List<Map<String,Closure>> describing the builds
                  //   buildStages = prepareBuildStages(stagesA, stepsA)
