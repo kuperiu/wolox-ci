@@ -88,8 +88,8 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                     def branchedStages = [:]
                     stage(myStage.name) {
                         for (myStep in myStage.steps) {
-                            test = stepsA["${myStep}"]
-                            println(test.dump())
+                            println("#######")
+                            println(myStep)
                         }
                     }
                 }
