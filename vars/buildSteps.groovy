@@ -88,7 +88,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                     def branchedStages = [:]
                     stage(myStage.name) {
                         for (myStep in myStage.steps) {
-                            for (s in stepA) {
+                            for (s in stepsA) {
                                 if (myStep == s.name) {
                                     println("found")
                                 }
