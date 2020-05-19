@@ -24,11 +24,12 @@ def prepareBuildStages(stages, steps) {
         println(sta.name)
         println(sta.steps)
         sta.steps.each { ste ->
-            steps.each {
-                if (sta.name == ste.name) {
-                    println(ste.name)
-                }
-            }
+            println(ste.name)
+            // steps.each {
+            //     if (sta.name == ste.name) {
+            //         println(ste.name)
+            //     }
+            // }
         }
     }
   def buildStagesList = []
