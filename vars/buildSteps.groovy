@@ -124,9 +124,9 @@ def getStep(Steps steps, String name) {
 }
 
 // Create List of build stages to suit
-def prepareBuildStages(steps, stepName) {
+def prepareBuildStages(ste, stepName) {
     def buildStagesList = []
-    steps.each { s ->
+    ste.each { s ->
         println("######")
         println(s.name)
     }
