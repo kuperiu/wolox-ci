@@ -4,6 +4,7 @@ import com.wolox.*;
 //import com.wolox.steps.Stage;
 import com.wolox.steps.*;
 import com.wolox.secrets.Secret;
+import Math
 
 def vault(service, path, key) { 
     node('team_a') {
@@ -85,7 +86,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                             stepsA.eachWithIndex { item, i ->
                                 
                                 if (item.name == myStep) {
-                                    int index=i, branch = myStep
+                                    int index=i, branch = Math.random()
                                     parallelSteps["${myStep}"] = {
                                          echo "${myStep}"
                                     }
