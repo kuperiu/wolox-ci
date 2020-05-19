@@ -37,19 +37,34 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         withEnv(secretList) {
             node() {
                 stagesA.each { s ->
-                        parallel 'linux': {
-                            stage('Linux') {
-                               println("Linux")
-                            }
-                        }, 'windows': {
-                            stage('Windows') {
-                                println("Windows")
-                            }
+                    parallel 'linux': {
+                        stage('Linux') {
+                            /* .. Your code/scripts .. */
+                        }
+                    }, 'windows': {
+                        stage('Windows') {
+                            /* .. Your code/scripts .. */
                         }
                     }
-
                 }
             }
+        }
+        // withEnv(secretList) {
+        //     node() {
+        //         stagesA.each { s ->
+        //                 parallel 'linux': {
+        //                     stage('Linux') {
+        //                        println("Linux")
+        //                     }
+        //                 }, 'windows': {
+        //                     stage('Windows') {
+        //                         println("Windows")
+        //                     }
+        //                 }
+        //             }
+
+        //         }
+        //     }
 // node('master') {
 //   stage('Initialise') {
 //     // Set up List<Map<String,Closure>> describing the builds
@@ -92,9 +107,9 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
             //         }
             //     }
             // }
-        }
-    }
-}
+    //     }
+    // }
+// }
 
 def getStep(Steps steps, String name) {
     Step step = new Step()
