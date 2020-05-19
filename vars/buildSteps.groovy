@@ -108,7 +108,7 @@ def prepareBuildStages(stages, steps) {
     stages.each { stage ->
         stage.steps.each { stepName ->
             println(stepName)
-            s = getStep(step, stepName)
+            s = getStep(steps, stepName)
             println(s)
         }
     }
