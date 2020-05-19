@@ -39,7 +39,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                 stagesA.each { sta ->
                     stage(sta.name) {
                         sta.steps.each { stepName ->
-                            parallel(prepareOneBuildStage(stepName))
+                            prepareOneBuildStage(stepsA, stepName)
                         }
                     }
                 }
@@ -120,9 +120,13 @@ def getStep(Steps steps, String name) {
 }
 
 // Create List of build stages to suit
-def prepareBuildStages() {
+def prepareBuildStages(steps, stepName) {
+    steps.each { s ->
+        if (s.name == stepName) {
+            println(stepName)
+        }
+    }
   def buildStagesList = []
-
   for (i=1; i<5; i++) {
     def buildParallelMap = [:]
     for (name in [ 'one', 'two', 'three' ] ) {
