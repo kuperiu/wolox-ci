@@ -36,7 +36,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
             stagesA.each { s ->
                 node(label) {
                     stage(s.name) {
-                        stage.steps.each { step ->
+                        s.steps.each { step ->
                             step = commands getStep(stepsA, step.name)
                             parallel (
                                 "${step.name}": {
