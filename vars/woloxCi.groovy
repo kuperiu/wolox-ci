@@ -20,12 +20,11 @@ def call(String yamlName) {
  projectConfig.secrets.secrets.each { s ->
     print s.name
 }
- projectConfig.stages.stages.each {
+ projectConfig.steps.steps.each {
     print it.name
     it.each { k, v ->
         print k
-        print v.dump()
-        v.each { l ->
+        v.commands.each { l ->
             print l
         }
     }
