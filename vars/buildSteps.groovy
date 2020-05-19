@@ -25,6 +25,8 @@ def prepareBuildStages(sta, steps) {
         def buildParallelMap = [:]
         steps.each { s ->
             println("stepName")
+             println(stepName)
+             println(s.name)
             if (s.name == stepName) {
                 buildParallelMap.put(stepName, prepareOneBuildStage(stepName))
             }
