@@ -108,6 +108,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                       println(k)
                       println(v)
                      }
+                     parallelSteps.clear()
                     }
 
                 }
