@@ -118,16 +118,16 @@ def getStep(Steps steps, String name) {
 
 // Create List of build stages to suit
 def prepareBuildStages(stages, steps) {
-    stages.each { sta ->
-         def buildParallelMap = [:]
-         sta.steps.each { stepName ->
-            steps.each { ste ->
-                if (ste.name == stepName) {
-                    println(stepName)
-                }
-            }
-         }
-    }
+    // stages.each { sta ->
+    //      def buildParallelMap = [:]
+    //      sta.steps.each { stepName ->
+    //         steps.each { ste ->
+    //             if (ste.name == stepName) {
+    //                 println(stepName)
+    //             }
+    //         }
+    //      }
+    // }
   def buildStagesList = []
   for (i=1; i<5; i++) {
     def buildParallelMap = [:]
