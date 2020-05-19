@@ -106,6 +106,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                     }
                                 }
                             }
+                            println parallelSteps.dump()
                             parallel(parallelSteps)
                         }
                         
