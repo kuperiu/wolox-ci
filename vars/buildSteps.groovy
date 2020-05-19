@@ -34,8 +34,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         def runParallel = true
         def buildStages
 
-
-
+    }
 }
         // withEnv(secretList) {
         //     node() {
