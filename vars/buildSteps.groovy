@@ -33,9 +33,9 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         def links = '--entrypoint=""'
 
         withEnv(secretList) {
-            stagesA.each { stage ->
+            stagesA.each { s ->
                 node(label) {
-                    stage(stage.name) {
+                    stage(s.name) {
                         echo "dd"
                         // stage.steps.each { step ->
                         //     step = commands getStep(stepsA, step.name)
