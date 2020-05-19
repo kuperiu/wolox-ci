@@ -36,20 +36,21 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
             stagesA.each { stage ->
                 node(label) {
                     stage "${stage.name}" {
-                        stage.steps.each { step ->
-                            step = commands getStep(stepsA, step.name)
-                            parallel (
-                                "${step.name}": {
-                                    node(label) {
-                                        docker.image(step.image).inside("--entrypoint=''")  {
-                                            step.commands.each { command ->
-                                                sh command
-                                            }
-                                        }   
-                                    }
-                                }
-                            )
-                        }
+                        echo "dd"
+                        // stage.steps.each { step ->
+                        //     step = commands getStep(stepsA, step.name)
+                        //     parallel (
+                        //         "${step.name}": {
+                        //             node(label) {
+                        //                 docker.image(step.image).inside("--entrypoint=''")  {
+                        //                     step.commands.each { command ->
+                        //                         sh command
+                        //                     }
+                        //                 }   
+                        //             }
+                        //         }
+                        //     )
+                        // }
                     }
                 }
             }
