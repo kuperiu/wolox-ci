@@ -83,13 +83,8 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                     println("Initialised pipeline.")
                 }
 
-                stagesA.each { s ->
-                    stage(s.name) {
-                        buildStages = prepareBuildStages(s, stepsA)
-                        for (builds in buildStages) {
-                            parallel(builds)
-                        }
-                    }
+                for (s in stagesA) {
+                    println(s.name)
                 }
 
 
