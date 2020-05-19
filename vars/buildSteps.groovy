@@ -38,7 +38,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
             node() {
                 stagesA.each { s ->
                     parallel {
-                        "${s.name}" {
+                        'lior' {
                             stage('Linux') {
                                 println("linux")
                             }
