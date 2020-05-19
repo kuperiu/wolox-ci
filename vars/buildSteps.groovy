@@ -95,7 +95,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                     echo "#########"
                                     println(test.name)
                                     echo "ppppppppppp"
-                                    parallelSteps["${test.name}"] = {
+                                    parallelSteps["${myStep}"] = {
                                         stage(test.name) {
                                            echo myStep
                                         }
