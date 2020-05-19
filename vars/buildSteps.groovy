@@ -34,10 +34,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         def runParallel = true
         def buildStages
 
-        withEnv(secretList) {
-            node() {
-            }
-        }
+
 
 }
         // withEnv(secretList) {
@@ -102,48 +99,48 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
     // }
 // }
 
-def getStep(Steps steps, String name) {
-    Step step = new Step()
-    steps.each { k, v ->
-        if (k == name) {
-            step.set(k, v.image, v.commands)
-        }
-    }
-    return step
-}
+// def getStep(Steps steps, String name) {
+//     Step step = new Step()
+//     steps.each { k, v ->
+//         if (k == name) {
+//             step.set(k, v.image, v.commands)
+//         }
+//     }
+//     return step
+// }
 
-// Create List of build stages to suit
-def prepareBuildStages(stages, steps) {
-    // stages.each { sta ->
-    //      def buildParallelMap = [:]
-    //      sta.steps.each { stepName ->
-    //         steps.each { ste ->
-    //             if (ste.name == stepName) {
-    //                 println(stepName)
-    //             }
-    //         }
-    //      }
-    // }
-  def buildStagesList = []
-  for (i=1; i<5; i++) {
-    def buildParallelMap = [:]
-    for (name in [ 'one', 'two', 'three' ] ) {
-      def n = "${name} ${i}"
-      buildParallelMap.put(n, prepareOneBuildStage(n))
-    }
-    buildStagesList.add(buildParallelMap)
-  }
-  return buildStagesList
-}
+// // Create List of build stages to suit
+// def prepareBuildStages(stages, steps) {
+//     // stages.each { sta ->
+//     //      def buildParallelMap = [:]
+//     //      sta.steps.each { stepName ->
+//     //         steps.each { ste ->
+//     //             if (ste.name == stepName) {
+//     //                 println(stepName)
+//     //             }
+//     //         }
+//     //      }
+//     // }
+//   def buildStagesList = []
+//   for (i=1; i<5; i++) {
+//     def buildParallelMap = [:]
+//     for (name in [ 'one', 'two', 'three' ] ) {
+//       def n = "${name} ${i}"
+//       buildParallelMap.put(n, prepareOneBuildStage(n))
+//     }
+//     buildStagesList.add(buildParallelMap)
+//   }
+//   return buildStagesList
+// }
 
-def prepareOneBuildStage(String name) {
-  return {
-    stage("Build stage:${name}") {
-      println("Building ${name}")
-      sh(script:'sleep 5', returnStatus:true)
-    }
-  }
-}
+// def prepareOneBuildStage(String name) {
+//   return {
+//     stage("Build stage:${name}") {
+//       println("Building ${name}")
+//       sh(script:'sleep 5', returnStatus:true)
+//     }
+//   }
+// }
 
 
 
