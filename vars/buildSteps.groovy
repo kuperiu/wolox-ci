@@ -264,7 +264,7 @@ def doDynamicParallelSteps(){
     tests["${f}"] = {
       node {
         stage("${f}") {
-          echo '${f}'
+          echo f
         }
       }
     }
