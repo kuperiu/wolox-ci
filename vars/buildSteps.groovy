@@ -81,15 +81,23 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                     stage(myStage.name) {
                         def parallelSteps = [:]
                         for (myStep in myStage.steps) {
-                            for (s in stepsA) {
-                                if (myStep == s.name) {
+                            stepsA.eachWithIndex { item, i ->
+                                if (myStep == item.name) {
+                                    int index=i, branch = i+1
                                     parallelSteps["${myStep}"] = {
-                                        stage(s.name) {
-                                           echo s.name
-                                        }
+                                        echo myStep
                                     }
                                 }
                             }
+                            // for (s in stepsA) {
+                            //     if (myStep == s.name) {
+                            //         parallelSteps["${myStep}"] = {
+                            //             stage(s.name) {
+                            //                echo s.name
+                            //             }
+                            //         }
+                            //     }
+                            // }
                         }
                      parallel(parallelSteps)
                      parallelSteps.clear()
