@@ -86,7 +86,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                     int index=i, branch = i+1
                                     parallelSteps["branch_${branch}"] = {
                                         stage(myStep) {
-                                            sh "echo branch_${myStep}"
+                                            sh "echo branch_${branch}"
                                         }
                                     }
                                 }
