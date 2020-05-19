@@ -19,23 +19,34 @@ def vault(service, path, key) {
 }
 
 // Create List of build stages to suit
-def prepareBuildStages(stages, steps) {
+def prepareBuildStages(sta, steps) {
     def buildStagesList = []
-    stages.each{ sta ->
-        println(sta.name)
-        println(sta.steps)
-        sta.steps.each { stepName ->
-            def buildParallelMap = [:]
-            steps.each { ste ->
-                if (ste.name == stepName) {
-                    buildParallelMap.put(stepName, prepareOneBuildStage(stepName))
-                }
+    sta.steps.each { stepName ->
+        def buildParallelMap = [:]
+        steps.each { s ->
+            if (s.name == stepName) {
+                buildParallelMap.put(stepName, prepareOneBuildStage(stepName))
             }
-            buildStagesList.add(buildParallelMap)
         }
     }
+
+    return buildStagesList
+
+//     stages.each{ sta ->
+//         println(sta.name)
+//         println(sta.steps)
+//         sta.steps.each { stepName ->
+//             def buildParallelMap = [:]
+//             steps.each { ste ->
+//                 if (ste.name == stepName) {
+//                     buildParallelMap.put(stepName, prepareOneBuildStage(stepName))
+//                 }
+//             }
+//             buildStagesList.add(buildParallelMap)
+//         }
+//     }
   
-  return buildStagesList
+//   return buildStagesList
 }
 
 def prepareOneBuildStage(String name) {
@@ -73,7 +84,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
 
                 stagesA.each { s ->
                     stage(s.name) {
-                        buildStages = prepareBuildStages(stagesA, stepsA)
+                        buildStages = prepareBuildStages(s, stepsA)
                     }
                 }
 
