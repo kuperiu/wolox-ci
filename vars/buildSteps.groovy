@@ -77,28 +77,37 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
 
         withEnv(secretList) {
             node(label) {                
-                for (myStage in stagesA) {                
-                    stage(myStage.name) {
-                        parallelSteps = [:]
-                        for (myStep in myStage.steps) {
-                            for (s in stepsA) {
-                                if (myStep == s.name) {
-                                    parallelSteps["${myStep}"] = {
-                                        stage("${myStep}") {
-                                           echo "${myStep}"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    //  parallel(parallelSteps)
-                     parallelSteps.each { k, v ->
-                     println(k)
-                     println(v.dump())
-                       }
-                    }
+stage("Some Stage") {
+    // Stuff ...
+}
 
-                }
+
+stage("Parallel Work Stage") {
+
+    // Prealocate dict/map of branchstages
+    def branchedStages = [:]
+
+    // Loop through all parallel branched stage names
+    for (STAGE_NAME in ["Branch_1", "Branch_2", "Branch_3"]) {
+
+        // Define and add to stages dict/map of parallel branch stages
+        branchedStages["${STAGE_NAME}"] = {
+            stage("Parallel Branch Stage: ${STAGE_NAME}") {
+                // Parallel stage work here
+                sh "sleep 10"
+            }
+        }
+
+    }
+
+    // Execute the stages in parallel
+    parallel branchedStages
+}
+
+
+stage("Some Other Stage") {
+    // Other stuff ...
+}
             }
         }
     }
