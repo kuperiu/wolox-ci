@@ -72,8 +72,8 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                 }
                 
                 stage("lolo") {
-                    stage("sublolo") {
-                        
+                    step("sublolo") {
+
                     }
                 }
                  for (builds in buildStages) {
