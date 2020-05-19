@@ -71,6 +71,11 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                     println("Initialised pipeline.")
                 }
                 
+                stage("lolo") {
+                    stage("sublolo") {
+                        
+                    }
+                }
                  for (builds in buildStages) {
                      parallel(builds)
                  }
