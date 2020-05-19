@@ -98,6 +98,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                                 // for (command in s.commands) {
                                                 //     sh command
                                                 // }
+                                                echo myStep
                                                 sh "sleep 10"
                                             }
                                         }
