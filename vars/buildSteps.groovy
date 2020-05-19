@@ -105,9 +105,9 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
 def prepareBuildStages(stages, steps) {
     def buildStagesList = []
 
-    stages.each { stageName, stageSteps ->
-        println(stageName.dump())
-        println(stageSteps)
+    stages.each { stage ->
+        println(stage.name)
+         println(stage.steps)
     }
 
     return buildStagesList
