@@ -96,7 +96,6 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                                 s.commands.each { command ->
                                                     println(myStep)
                                                     println(command)
-                                                    sh command
                                                 }
                                             }
                                         }
