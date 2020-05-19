@@ -19,7 +19,16 @@ def vault(service, path, key) {
 }
 
 // Create List of build stages to suit
-def prepareBuildStages() {
+def prepareBuildStages(stages, steps) {
+    stages.each{ sta ->
+        println(sta.name)
+        println(sta.steps)
+        sta.steps.each { ste ->
+            steps.each {
+                println(ste)
+            }
+        }
+    }
   def buildStagesList = []
 
   for (i=1; i<5; i++) {
@@ -62,7 +71,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
             node() {
                 stage('Initialise') {
                     // Set up List<Map<String,Closure>> describing the builds
-                    buildStages = prepareBuildStages()
+                    buildStages = prepareBuildStages(stages, steps)
                     println("Initialised pipeline.")
                 }
             }
