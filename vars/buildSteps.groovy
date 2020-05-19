@@ -35,24 +35,23 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         withEnv(secretList) {
             stagesA.each { stage ->
                 node(label) {
-                    echo stage.name
-                    // stage("${stage.name}") {
-                    //     echo "dd"
-                    //     // stage.steps.each { step ->
-                    //     //     step = commands getStep(stepsA, step.name)
-                    //     //     parallel (
-                    //     //         "${step.name}": {
-                    //     //             node(label) {
-                    //     //                 docker.image(step.image).inside("--entrypoint=''")  {
-                    //     //                     step.commands.each { command ->
-                    //     //                         sh command
-                    //     //                     }
-                    //     //                 }   
-                    //     //             }
-                    //     //         }
-                    //     //     )
-                    //     // }
-                    // }
+                    stage(stage.name) {
+                        echo "dd"
+                        // stage.steps.each { step ->
+                        //     step = commands getStep(stepsA, step.name)
+                        //     parallel (
+                        //         "${step.name}": {
+                        //             node(label) {
+                        //                 docker.image(step.image).inside("--entrypoint=''")  {
+                        //                     step.commands.each { command ->
+                        //                         sh command
+                        //                     }
+                        //                 }   
+                        //             }
+                        //         }
+                        //     )
+                        // }
+                    }
                 }
             }
         }
