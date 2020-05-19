@@ -47,8 +47,8 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         withEnv(secretList) {
             node(label) {
                 stage('Initialise') {
-                    println(stagesA)
-                    //buildStages = prepareBuildStages()
+                    println(stagesA.dump())
+                    buildStages = prepareBuildStages(stagesA, stepsA)
                     println("Initialised pipeline.")
                 }
 
