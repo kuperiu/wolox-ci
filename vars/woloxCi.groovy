@@ -28,9 +28,9 @@ def call(String yamlName) {
     }
 
     // we execute the top level closure so that the cascade starts.
-    try {
-        closure([:]);
-    } finally{
-        deleteDockerImages(projectConfig);
-    }
+    // try {
+    //     closure([:]);
+    // } finally{
+    //     deleteDockerImages(projectConfig);
+    // }
 }
