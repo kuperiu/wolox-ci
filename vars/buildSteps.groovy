@@ -90,7 +90,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                             stepsA[index].commands.each { command ->
                                                 sh command
                                             }
-                                            if (tepsA[index].name == test) {
+                                            if (tepsA[index].name == "test") {
                                                 post {
                                                     always {
                                                         junit ./report.xml
