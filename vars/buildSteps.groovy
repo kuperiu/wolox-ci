@@ -76,7 +76,8 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         def buildStages
 
         withEnv(secretList) {
-            node(label) {                
+            node(label) {    
+                checkout scm            
                 for (myStage in stagesA) {                
                     stage(myStage.name) {
                         def parallelSteps = [:]
