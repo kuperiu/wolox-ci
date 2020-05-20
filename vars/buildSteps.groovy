@@ -90,6 +90,9 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                             stepsA[index].commands.each { command ->
                                                 sh command
                                             }
+                                            if (tepsA[index].name == "test") {
+                                                echo "test"
+                                            }
                                         }
                                     }
                                 }
