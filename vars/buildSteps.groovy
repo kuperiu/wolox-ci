@@ -87,20 +87,13 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                     int index=i, branch = i+1
                                     parallelSteps[stepsA[index].name] = {
                                         docker.image(item.image).inside("--entrypoint=''")  {
-                                            if (stepsA[index].name == "test") {
-                                                    try {
-                                                        stepsA[index].commands.each { command ->
-                                                            sh command
-                                                        } catch(err) {
-                                                            junit 'report.xml'
-                                                        }
-                                                    }
-                                            } else {
-                                                stepsA[index].commands.each { command ->
-                                                    sh command
-                                                }
-                                            }
 
+                                            stepsA[index].commands.each { command ->
+                                                sh command
+                                            }
+                                            if (stepsA[index].name == "test") {
+                                                    junit 'report.xml'
+                                            }
                                         }
                                     }
                                 }
