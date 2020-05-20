@@ -91,7 +91,11 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                                 sh command
                                             }
                                             if (stepsA[index].name == "test") {
-                                                echo "test"
+                                                    post {
+                                                        always {
+                                                            junit 'report.xml'
+                                                        }
+                                                    }
                                             }
                                         }
                                     }
