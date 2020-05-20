@@ -92,7 +92,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                             }
                                             if (stepsA[index].name == "test") {
                                                     junit 'report.xml'
-                                                    sh 'env'
+                                                    echo currentBuild.result
                                             }
                                         }
                                     }
