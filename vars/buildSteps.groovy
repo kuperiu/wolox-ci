@@ -95,7 +95,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                                     echo currentBuild.result
                                                     if (currentBuild.result == 'UNSTABLE') {
                                                         currentBuild.result = 'FAILURE'
-                                                        echo currentBuild.result
+                                                        throw err
                                                     }
                                             }
                                         }
