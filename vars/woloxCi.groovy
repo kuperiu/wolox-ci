@@ -17,7 +17,7 @@ def call(String yamlName) {
    //def customImage = docker.build(imageName, "--file ${projectConfig.dockerfile} .");
     // println "ls -l".execute().text
     // println "env".execute().text
-        def customImage = docker.image("${projectConfig.image}")
+    def customImage = docker.image("${projectConfig.image}")
     // adds the last step of the build.
     def closure = buildSteps(projectConfig, customImage);
 
@@ -28,9 +28,9 @@ def call(String yamlName) {
     }
 
     // we execute the top level closure so that the cascade starts.
-    // try {
-    //     closure([:]);
-    // } finally{
-    //     deleteDockerImages(projectConfig);
-    // }
+    try {
+        closure([:]);
+    } finally{
+        deleteDockerImages(projectConfig);
+    }
 }

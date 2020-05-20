@@ -85,7 +85,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                 if (myStep == item.name) {
                                     int index=i, branch = i+1
                                     parallelSteps["${branch}"] = {
-                                            sh "echo branch_${branch}_${myStep}"
+                                            echo stepsA[index].name
                                     }
                                 }
                             }
