@@ -85,9 +85,11 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                 if (myStep == item.name) {
                                     int index=i, branch = i+1
                                     parallelSteps[stepsA[index].name] = {
+                                        docker.image(item.image).inside("--entrypoint=''")  {
                                             stepsA[index].commands.each { command ->
                                                 sh command
                                             }
+                                        }
                                     }
                                 }
                             }
@@ -105,11 +107,6 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                      parallelSteps.clear()
                     }
 
-                }
-
-
-                stage('Finish') {
-                    println('Build complete.')
                 }
             }
         }
