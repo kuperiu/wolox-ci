@@ -92,7 +92,9 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                             }
                                             if (stepsA[index].name == "test") {
                                                     junit 'report.xml'
-                                                    echo currentBuild.result
+                                                    if (currentBuild.result == 'UNSTABLE') {
+                                                        currentBuild.result = 'FAILURE'
+                                                    }
                                             }
                                         }
                                     }
