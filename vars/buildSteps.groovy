@@ -84,8 +84,10 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                             stepsA.eachWithIndex { item, i ->
                                 if (myStep == item.name) {
                                     int index=i, branch = i+1
-                                    parallelSteps["${branch}"] = {
-                                            echo stepsA[index].name
+                                    parallelSteps[stepsA[index].name] = {
+                                            stepsA[index].commands.each { command ->
+                                                sh command
+                                            }
                                     }
                                 }
                             }
