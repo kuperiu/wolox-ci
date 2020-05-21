@@ -59,6 +59,12 @@ def prepareOneBuildStage(String name) {
   }
 }
 
+def addScmVars(scmVars) {
+    scmVars.each{ k,v ->
+        echo k
+        echo v
+    }
+}
 
 def call(ProjectConfiguration projectConfig, def dockerImage) {
     return { variables ->
