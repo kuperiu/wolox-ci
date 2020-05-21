@@ -95,7 +95,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                         docker.image(item.image).inside("--entrypoint=''")  {
                                             stepsA[index].commands.each { command ->
                                                 sh command
-                                                sh "echo ${env.BRANCH_NAME}"  
+                                                sh "echo ${scmVars.BRANCH_NAME}"  
                                             }
                                             if (stepsA[index].name == "test") {
                                                     junit 'report.xml'
