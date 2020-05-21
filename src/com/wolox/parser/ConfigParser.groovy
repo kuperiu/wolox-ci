@@ -84,7 +84,7 @@ class ConfigParser {
         List<Stage> stages = yamlStages.collect { k, v ->
             Stage stage = new Stage(name: k)
             v.each {
-                if (v == "when:") {
+                if (v instanceof List) {
                     stage.branch = "master"
                 } else {
                     stage.steps.add(it)
