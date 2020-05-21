@@ -73,6 +73,7 @@ def postTest(stepName) {
     }
 }
 
+
 def prepareStage(myStage, stepsA) {
     def parallelSteps = [:]
     for (myStep in myStage.steps) {
@@ -86,6 +87,9 @@ def prepareStage(myStage, stepsA) {
                         }
                         if (stepsA[index].name == "test") {
                                 postTest(stepsA[index].name)
+                        }
+                        if (stepsA[index].name == "deploy") {
+                                 archiveArtifacts artifacts: 'jenkins', fingerprint: true
                         }
                     }
                 }
