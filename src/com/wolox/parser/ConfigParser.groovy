@@ -85,7 +85,7 @@ class ConfigParser {
             Stage stage = new Stage(name: k)
             v.each {
                 if (v instanceof List) {
-                    stage.branch = v
+                    stage.branch = "master"
                 } else {
                     stage.steps.add(it)
                 }
