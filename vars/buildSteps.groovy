@@ -67,7 +67,6 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         List<Step> stepsA = projectConfig.steps.steps
         List<Secret> secrets = projectConfig.secrets.secrets
 
-        envVariables = "GOCACHE=" + "${env.WORKSPACE}" + "/.cache"
 
         def secretList = []
         secrets.each { secret ->
@@ -84,7 +83,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         withEnv(secretList) {
             node(label) {    
                 checkout scm    
-                sh "echo ${env.BRANCH_NAME}"        
+                      
                 for (myStage in stagesA) {                
                     stage(myStage.name) {
                         def parallelSteps = [:]
@@ -96,6 +95,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                         docker.image(item.image).inside("--entrypoint=''")  {
                                             stepsA[index].commands.each { command ->
                                                 sh command
+                                                sh "echo ${env.BRANCH_NAME}"  
                                             }
                                             if (stepsA[index].name == "test") {
                                                     junit 'report.xml'
