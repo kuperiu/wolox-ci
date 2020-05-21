@@ -73,7 +73,7 @@ def postTest() {
     }
 }
 
-def prepareStage(myStage) {
+def prepareStage(myStage, stepsA) {
     def parallelSteps = [:]
     for (myStep in myStage.steps) {
         stepsA.eachWithIndex { item, i ->
@@ -128,7 +128,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                 addScmVars(scmVars)
                 for (myStage in stagesA) {
                     stage(myStage.name) {
-                        prepareStage(myStage)
+                        prepareStage(myStage, stepsA)
                     }
 
                 }
