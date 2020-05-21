@@ -59,17 +59,23 @@ def prepareOneBuildStage(String name) {
   }
 }
 
+
+
 def call(ProjectConfiguration projectConfig, def dockerImage) {
     return { variables ->
         List<Stage> stagesA = projectConfig.stages.stages
         List<Step> stepsA = projectConfig.steps.steps
         List<Secret> secrets = projectConfig.secrets.secrets
+
+        envVariables = ["GOCACHE=" + "${env.WORKSPACE}" + "/.cache"]
+
         def secretList = []
         secrets.each { secret ->
            mySecret = vault(secret.service, secret.path, secret.key)
            secretList << "${secret.name}=${mySecret}"
         } 
 
+        envVariables += secretList
         label = "team_a"
         def links = '--entrypoint=""'
         def runParallel = true
