@@ -75,7 +75,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
            secretList << "${secret.name}=${mySecret}"
         } 
 
-        envVariables += secretList
+        secretList += envVariables
         label = "team_a"
         def links = '--entrypoint=""'
         def runParallel = true
