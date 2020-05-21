@@ -73,6 +73,29 @@ def postTest() {
     }
 }
 
+def prepareStage(myStage) {
+    def parallelSteps = [:]
+    for (myStep in myStage.steps) {
+        stepsA.eachWithIndex { item, i ->
+            if (myStep == item.name) {
+                int index=i, branch = i+1
+                parallelSteps[stepsA[index].name] = {
+                    docker.image(item.image).inside("--entrypoint=''")  {
+                        stepsA[index].commands.each { command ->
+                            sh command
+                        }
+                        if (stepsA[index].name == "test") {
+                                postTest()
+                        }
+                    }
+                }
+            }
+        }
+    }
+    parallel(parallelSteps)
+    parallelSteps.clear()
+}
+
 def call(ProjectConfiguration projectConfig, def dockerImage) {
     if (currentBuild.rawBuild.getCauses().toString().contains('BranchIndexingCause')) {
         print "INFO: Build skipped due to trigger being Branch Indexing"
@@ -105,26 +128,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                 addScmVars(scmVars)
                 for (myStage in stagesA) {
                     stage(myStage.name) {
-                        def parallelSteps = [:]
-                        for (myStep in myStage.steps) {
-                            stepsA.eachWithIndex { item, i ->
-                                if (myStep == item.name) {
-                                    int index=i, branch = i+1
-                                    parallelSteps[stepsA[index].name] = {
-                                        docker.image(item.image).inside("--entrypoint=''")  {
-                                            stepsA[index].commands.each { command ->
-                                                sh command
-                                            }
-                                            if (stepsA[index].name == "test") {
-                                                    postTest()
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                     parallel(parallelSteps)
-                     parallelSteps.clear()
+                        prepareStage(myStage)
                     }
 
                 }
