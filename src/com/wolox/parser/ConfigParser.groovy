@@ -84,7 +84,9 @@ class ConfigParser {
         List<Stage> stages = yamlStages.collect { k, v ->
             Stage stage = new Stage(name: k)
             v.each {
+                echo v
                 if (v == "when:") {
+                    return
                    v.each { me ->
                        stage.branch = me.branch
                    }
