@@ -65,11 +65,11 @@ def addScmVars(scmVars) {
     }
 }
 
-def postTest() {
+def postTest(stepName) {
     junit 'report.xml'
     if (currentBuild.result == 'UNSTABLE') {
         currentBuild.result = 'FAILURE'
-        throw err
+        throw new Exception("Step ${stepName} has failed")
     }
 }
 
@@ -85,7 +85,7 @@ def prepareStage(myStage, stepsA) {
                             sh command
                         }
                         if (stepsA[index].name == "test") {
-                                postTest()
+                                postTest(stepsA[index].name)
                         }
                     }
                 }
