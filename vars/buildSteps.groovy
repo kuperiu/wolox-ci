@@ -82,7 +82,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
 
         withEnv(secretList) {
             node(label) {    
-                checkout scm    
+                def scmVars = checkout scm    
                       
                 for (myStage in stagesA) {                
                     stage(myStage.name) {
