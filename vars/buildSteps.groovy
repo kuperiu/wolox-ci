@@ -128,6 +128,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                 addScmVars(scmVars)
                 for (myStage in stagesA) {
                     echo "######"
+                    echo myStage.dump()
                     echo myStage.branch
                     stage(myStage.name) {
                         prepareStage(myStage, stepsA)
