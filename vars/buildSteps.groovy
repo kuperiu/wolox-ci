@@ -95,36 +95,35 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
             node(label) {    
                 def scmVars = checkout(scm)  
                 addScmVars(scmVars)
-                for (myStage in stagesA) {   
-                    if (env.GIT_BRANCH == null || env.GIT_BRANCH == myStage.branch) {
-                        stage(myStage.name) {
-                            def parallelSteps = [:]
-                            for (myStep in myStage.steps) {
-                                stepsA.eachWithIndex { item, i ->
-                                    if (myStep == item.name) {
-                                        int index=i, branch = i+1
-                                        parallelSteps[stepsA[index].name] = {
-                                            docker.image(item.image).inside("--entrypoint=''")  {
-                                                stepsA[index].commands.each { command ->
-                                                    sh command
-                                                }
-                                                if (stepsA[index].name == "test") {
-                                                        junit 'report.xml'
-                                                        if (currentBuild.result == 'UNSTABLE') {
-                                                            currentBuild.result = 'FAILURE'
-                                                            throw err
-                                                        }
-                                                }
+                for (myStage in stagesA) {    
+                    echo "myStage.branch" 
+                    echo myStage.branch        
+                    stage(myStage.name) {
+                        def parallelSteps = [:]
+                        for (myStep in myStage.steps) {
+                            stepsA.eachWithIndex { item, i ->
+                                if (myStep == item.name) {
+                                    int index=i, branch = i+1
+                                    parallelSteps[stepsA[index].name] = {
+                                        docker.image(item.image).inside("--entrypoint=''")  {
+                                            stepsA[index].commands.each { command ->
+                                                sh command
+                                            }
+                                            if (stepsA[index].name == "test") {
+                                                    junit 'report.xml'
+                                                    if (currentBuild.result == 'UNSTABLE') {
+                                                        currentBuild.result = 'FAILURE'
+                                                        throw err
+                                                    }
                                             }
                                         }
                                     }
                                 }
                             }
-                        parallel(parallelSteps)
-                        parallelSteps.clear()
                         }
-                    }  
-
+                     parallel(parallelSteps)
+                     parallelSteps.clear()
+                    }
 
                 }
             }
