@@ -87,7 +87,9 @@ class ConfigParser {
                 if (v instanceof List) {
                     stage.branch = "master"
                 } else {
-                    stage.steps.add(it)
+                    v.commands {
+                        stage.steps.add(it)
+                    }
                 }
             }
             return stage
