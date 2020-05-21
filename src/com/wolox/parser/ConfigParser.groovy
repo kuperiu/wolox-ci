@@ -86,9 +86,11 @@ class ConfigParser {
             v.steps.each {
                 stage.steps.add(it)
             }
-            v.when.each { i, j ->
-                if (i == branch) {
-                    stage.branch = j
+            if (v.when != null) {
+                v.when.each { i, j ->
+                    if (i == branch) {
+                        stage.branch = j
+                    }
                 }
             }
             return stage
