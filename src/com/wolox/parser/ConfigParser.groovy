@@ -86,7 +86,7 @@ class ConfigParser {
             v.each {
                 if (v == "when:") {
                    v.each { me ->
-                       stage.branch = me
+                       stage.branch = me.branch
                    }
                 } else {
                     stage.steps.add(it)
