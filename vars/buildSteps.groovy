@@ -60,7 +60,6 @@ def prepareOneBuildStage(String name) {
 }
 
 
-
 def call(ProjectConfiguration projectConfig, def dockerImage) {
     return { variables ->
         List<Stage> stagesA = projectConfig.stages.stages
