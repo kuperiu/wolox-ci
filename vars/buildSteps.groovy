@@ -99,7 +99,6 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                         docker.image(item.image).inside("--entrypoint=''")  {
                                             stepsA[index].commands.each { command ->
                                                 sh command
-                                                echo currentBuild.dump()
                                             }
                                             if (stepsA[index].name == "test") {
                                                     junit 'report.xml'
