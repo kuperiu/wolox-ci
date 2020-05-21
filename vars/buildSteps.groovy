@@ -67,7 +67,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         List<Step> stepsA = projectConfig.steps.steps
         List<Secret> secrets = projectConfig.secrets.secrets
 
-        envVariables = ["GOCACHE=" + "${env.WORKSPACE}" + "/.cache"]
+        envVariables = "GOCACHE=" + "${env.WORKSPACE}" + "/.cache"
 
         def secretList = []
         secrets.each { secret ->
@@ -75,7 +75,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
            secretList << "${secret.name}=${mySecret}"
         } 
 
-        secretList += envVariables
+        secretList.add(envVariables)
         label = "team_a"
         def links = '--entrypoint=""'
         def runParallel = true
