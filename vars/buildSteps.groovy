@@ -96,10 +96,6 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                 def scmVars = checkout(scm)  
                 addScmVars(scmVars)
                 for (myStage in stagesA) {
-                    if (env.GIT_BRANCH == null || GIT_BRANCH == myStage.branch) {
-                        echo "myStage.branch" 
-                        echo myStage.branch   
-                    }         
                     stage(myStage.name) {
                         def parallelSteps = [:]
                         for (myStep in myStage.steps) {

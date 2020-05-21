@@ -81,25 +81,14 @@ class ConfigParser {
     }
 
     static def parseStages(def yamlStages) {
-        // List<Stage> stages = yamlStages.collect { k, v ->
-        //     Stage stage = new Stage(name: k)
-        //     v.each {
-        //         stage.steps.add(it)
-        //     }
-        //     return stage
-        // }
         List<Stage> stages = yamlStages.collect { k, v ->
             Stage stage = new Stage(name: k)
             v.each {
-                if (k == "deploy") {
-                   stage.branch = "master"
-                } else {
-                    stage.steps.add(it)
-                }
-                
+                stage.steps.add(it)
             }
             return stage
         }
+
         return new Stages(stages: stages);
     }
 
