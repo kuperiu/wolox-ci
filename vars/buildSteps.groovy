@@ -7,7 +7,7 @@ import com.wolox.secrets.Secret;
 
 def vault(service, path, key) { 
     node('team_a') {
-        withEnv(["VAULT_ADDR=https://this.vault.dazn-dev.com", "VAULT_NAMESPACE=${service}"]) {
+        withEnv(["VAULT_NAMESPACE=${service}"]) {
             login = "vault login -method=aws role=${service} > /dev/null 2>&1"
             readSecret = "vault kv get -format=json ${path} | jq .data.data.${key}"
             script {  
