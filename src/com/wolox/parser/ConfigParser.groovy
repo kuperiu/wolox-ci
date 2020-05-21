@@ -85,7 +85,7 @@ class ConfigParser {
             Stage stage = new Stage(name: k)
             v.each {
                 if (v == "when") {
-                    stage.branch = v.when.branch
+                    stage.when.branch = v.when.branch
                 } else {
                     stage.steps.add(it)
                 }
