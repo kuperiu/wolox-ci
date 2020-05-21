@@ -65,6 +65,14 @@ def addScmVars(scmVars) {
     }
 }
 
+def postTest() {
+    junit 'report.xml'
+    if (currentBuild.result == 'UNSTABLE') {
+        currentBuild.result = 'FAILURE'
+        throw err
+    }
+}
+
 def call(ProjectConfiguration projectConfig, def dockerImage) {
     if (currentBuild.rawBuild.getCauses().toString().contains('BranchIndexingCause')) {
         print "INFO: Build skipped due to trigger being Branch Indexing"
@@ -108,11 +116,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                                 sh command
                                             }
                                             if (stepsA[index].name == "test") {
-                                                    junit 'report.xml'
-                                                    if (currentBuild.result == 'UNSTABLE') {
-                                                        currentBuild.result = 'FAILURE'
-                                                        throw err
-                                                    }
+                                                    postTest()
                                             }
                                         }
                                     }
