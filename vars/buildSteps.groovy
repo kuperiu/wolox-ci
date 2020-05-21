@@ -83,7 +83,8 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
 
         withEnv(secretList) {
             node(label) {    
-                checkout scm            
+                checkout scm    
+                sh "echo ${env.BRANCH_NAME}"        
                 for (myStage in stagesA) {                
                     stage(myStage.name) {
                         def parallelSteps = [:]
