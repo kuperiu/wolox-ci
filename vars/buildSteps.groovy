@@ -95,8 +95,9 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
             node(label) {    
                 def scmVars = checkout(scm)  
                 addScmVars(scmVars)
-                for (myStage in stagesA) {     
-                    println myStage.branch        
+                for (myStage in stagesA) {    
+                    echo "myStage.branch" 
+                    echo myStage.branch        
                     stage(myStage.name) {
                         def parallelSteps = [:]
                         for (myStep in myStage.steps) {
