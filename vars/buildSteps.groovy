@@ -68,9 +68,11 @@ def addScmVars(scmVars) {
 def call(ProjectConfiguration projectConfig, def dockerImage) {
     if (currentBuild.rawBuild.getCauses().toString().contains('BranchIndexingCause')) {
         print "INFO: Build skipped due to trigger being Branch Indexing"
-        return
+        return { variables ->
+            node() {}
+        }
     }
-    
+
     return { variables ->
         List<Stage> stagesA = projectConfig.stages.stages
         List<Step> stepsA = projectConfig.steps.steps
