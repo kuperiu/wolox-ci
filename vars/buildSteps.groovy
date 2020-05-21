@@ -82,14 +82,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
 
         withEnv(secretList) {
             node(label) {    
-                stage("Checkout") {
-                    script {
-                         def scmVars = checkout([
-                              $class: 'GitSCM',
-                             ])
-                    }
-                    echo "scmVars.GIT_COMMIT"
-                }  
+                def scmVars = checkout(scm)  
                       
                 for (myStage in stagesA) {                
                     stage(myStage.name) {
@@ -102,6 +95,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                         docker.image(item.image).inside("--entrypoint=''")  {
                                             stepsA[index].commands.each { command ->
                                                 sh command
+                                                sh "echo ${scmVars}"  
                                             }
                                             if (stepsA[index].name == "test") {
                                                     junit 'report.xml'
