@@ -61,8 +61,7 @@ def prepareOneBuildStage(String name) {
 
 def addScmVars(scmVars) {
     scmVars.each{ k,v ->
-        echo k
-        echo v
+        env."${k}" = v
     }
 }
 
