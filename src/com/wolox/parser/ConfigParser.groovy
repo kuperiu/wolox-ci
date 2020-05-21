@@ -83,8 +83,13 @@ class ConfigParser {
     static def parseStages(def yamlStages) {
         List<Stage> stages = yamlStages.collect { k, v ->
             Stage stage = new Stage(name: k)
-            v.each {
+            v.steps.each {
                 stage.steps.add(it)
+            }
+            v.when.each { i, j ->
+                if (i == branch) {
+                    stage.branch = j
+                }
             }
             return stage
         }

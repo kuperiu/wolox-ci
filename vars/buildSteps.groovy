@@ -127,7 +127,6 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                 def scmVars = checkout(scm)  
                 addScmVars(scmVars)
                 for (myStage in stagesA) {
-                    echo myStage.dump()
                     if (env.GIT_BRANCH == myStage.branch || myStage.branch == null) {
                         stage(myStage.name) {
                             prepareStage(myStage, stepsA)
