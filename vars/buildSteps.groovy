@@ -88,7 +88,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         withEnv(secretList) {
             node(label) {    
                 def scmVars = checkout(scm)  
-                      
+                addScmVars(scmVars)
                 for (myStage in stagesA) {                
                     stage(myStage.name) {
                         def parallelSteps = [:]
@@ -100,7 +100,6 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                                         docker.image(item.image).inside("--entrypoint=''")  {
                                             stepsA[index].commands.each { command ->
                                                 sh command
-                                                sh "echo ${scmVars}"  
                                             }
                                             if (stepsA[index].name == "test") {
                                                     junit 'report.xml'
