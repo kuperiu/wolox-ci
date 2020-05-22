@@ -4,8 +4,8 @@ class Step {
     List<String> commands = [];
     String name;
     String image;
-    Bool recordTest;
-    Bool archiveArtifact;
+    Boolean recordTest;
+    Boolean archiveArtifact;
 
     def set(String name, String image, List<String> commands) {
         this.name = name
