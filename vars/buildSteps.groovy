@@ -66,7 +66,9 @@ def addScmVars(scmVars) {
 }
 
 def postTest(stepName) {
-    junit 'report2.xml'
+    always {
+        junit 'report2.xml'
+    }
     if (currentBuild.result == 'UNSTABLE') {
         currentBuild.result = 'FAILURE'
         throw new Exception("Step ${stepName} has failed")
