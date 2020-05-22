@@ -66,7 +66,7 @@ def addScmVars(scmVars) {
 }
 
 def postTest(stepName) {
-    always {
+    post {
         junit 'report2.xml'
     }
     if (currentBuild.result == 'UNSTABLE') {
