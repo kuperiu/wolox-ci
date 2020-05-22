@@ -107,10 +107,10 @@ class ConfigParser {
                 step.commands.add(it);
             }
             if (v.archive_artifact != null) {
-                step.archiveArtifact = "${v.archive_artifact}"
+                step.archiveArtifact = v.archive_artifact
             }
             if (v.record_test != null) {
-                step.recordTest = "${v.record_test}"
+                step.recordTest = v.record_test
             }
             return step
         }

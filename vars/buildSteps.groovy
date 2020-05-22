@@ -85,7 +85,7 @@ def prepareStage(myStage, stepsA) {
                         stepsA[index].commands.each { command ->
                             sh command
                         }
-                        if (stepsA[index].v.recordTest) {
+                        if (stepsA[index].recordTest) {
                                 postTest(stepsA[index].name)
                         }
                         if (stepsA[index].archiveArtifact) {
