@@ -66,7 +66,7 @@ def addScmVars(scmVars) {
 }
 
 def postTest(stepName) {
-    junit 'report2.xml'
+    junit "${env.GIT_COMMIT}.xml"
     if (currentBuild.result == 'UNSTABLE') {
         currentBuild.result = 'FAILURE'
         throw new Exception("Step ${stepName} has failed")
@@ -85,10 +85,10 @@ def prepareStage(myStage, stepsA) {
                         stepsA[index].commands.each { command ->
                             sh command
                         }
-                        if (stepsA[index].name == "test") {
+                        if (stepsA[index].v.recordTest) {
                                 postTest(stepsA[index].name)
                         }
-                        if (stepsA[index].name == "deploy") {
+                        if (stepsA[index].archiveArtifact) {
                                  archiveArtifacts artifacts: 'jenkins', fingerprint: true
                         }
                     }
