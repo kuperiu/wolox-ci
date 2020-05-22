@@ -106,10 +106,10 @@ class ConfigParser {
             v.commands.each {
                 step.commands.add(it);
             }
-            if v.archive_artifact != nil {
+            if (v.archive_artifact != null) {
                 step.archiveArtifact = v.archive_artifact
             }
-            if v.record_test != nil {
+            if (v.record_test != null) {
                 step.recordTest = v.record_test
             }
             return step
