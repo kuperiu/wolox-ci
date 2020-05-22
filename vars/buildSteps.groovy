@@ -77,6 +77,7 @@ def postTest(stepName) {
 def prepareStage(myStage, stepsA) {
     def parallelSteps = [:]
     for (myStep in myStage.steps) {
+        preserveStashes(buildCount: 5)
         stepsA.eachWithIndex { item, i ->
             if (myStep == item.name) {
                 int index=i, branch = i+1
