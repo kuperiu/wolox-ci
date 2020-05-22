@@ -81,7 +81,6 @@ def prepareStage(myStage, stepsA) {
             if (myStep == item.name) {
                 int index=i, branch = i+1
                 parallelSteps[stepsA[index].name] = {
-                    preserveStashes(buildCount: 5)
                     docker.image(item.image).inside("--entrypoint=''")  {
                         stepsA[index].commands.each { command ->
                             sh command
