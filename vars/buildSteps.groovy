@@ -66,7 +66,7 @@ def addScmVars(scmVars) {
 }
 
 def postTest(stepName) {
-    junit "${env.GIT_COMMIT}.xml"
+    junit "${stepName}.xml"
     if (currentBuild.result == 'UNSTABLE') {
         currentBuild.result = 'FAILURE'
         throw new Exception("Step ${stepName} has failed")
