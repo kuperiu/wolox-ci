@@ -139,8 +139,9 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                     }
                     if (env.GIT_BRANCH == myStage.branch || myStage.branch == null) {
                         stage(myStage.name) {
-                            res = prepareStage(myStage, stepsA)
-                            echo res
+                            prepareStage(myStage, stepsA)
+                            echo "###build####"
+                            echo currentBuild.result
                         }                      
                     }
                 }
