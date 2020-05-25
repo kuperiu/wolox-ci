@@ -125,10 +125,11 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         def links = '--entrypoint=""'
         def runParallel = true
         def buildStages
-properties([[$class: 'ParametersDefinitionProperty', parameterDefinitions: [[$class: 'StringParameterDefinition', name: 'myparam', defaultValue: 'default value']]]])
-echo "received ${binding.hasVariable('myparam') ? myparam : 'undefined'}"
+
         withEnv(secretList) {
             node(label) {    
+properties([[$class: 'ParametersDefinitionProperty', parameterDefinitions: [[$class: 'StringParameterDefinition', name: 'myparam', defaultValue: 'default value']]]])
+echo "received ${binding.hasVariable('myparam') ? myparam : 'undefined'}"
                 def scmVars = checkout(scm)  
                 addScmVars(scmVars)
                 for (myStage in stagesA) {
