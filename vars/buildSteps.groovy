@@ -121,7 +121,8 @@ def prepareDeployment(owner, repo) {
 }
 
 def recordDeploymentStatus(id, owner, repo, result) {
-    def deployStatusBody = '{"state": "' + result + '","target_url": "http://github.com/deploymentlogs"}'
+    def tragetURL = env.RUN_DISPLAY_URL
+    def deployStatusBody = '{"state": "' + result + '","target_url": "' + tragetURL + '"}'
     def deployStatusURL = "https://api.github.com/repos/${owner}/${repo}/deployments/${id}/statuses"
     def deployStatusResponse = httpRequest authentication: 'github2', httpMode: 'POST', requestBody: deployStatusBody , responseHandle: 'STRING', url: deployStatusURL
     if(deployStatusResponse.status != 201) {
@@ -183,9 +184,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                 }
 
                 if (env.DEPLOYMENT != "" && env.GIT_BRANCH == "master") {
-                    echo "urrentBuild.result "
-                    echo currentBuild.result 
-                    if (currentBuild.result != null) {
+                    if (currentBuild.result) {
                         recordDeploymentStatus(id, owner, repo, "success")
                     } else {
                         recordDeploymentStatus(id, owner, repo, "failure")
