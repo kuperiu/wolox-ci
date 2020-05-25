@@ -101,7 +101,7 @@ def prepareStage(myStage, stepsA) {
 }
 
 def prepareDeployment(owner, repo) {
-    def ref = env.GIT_COMMIT
+    def ref = "master"
     def environment = env.DEPLOYMENT
     def description = env.RUN_DISPLAY_URL
     def deployURL = "https://api.github.com/repos/${owner}/${repo}/deployments"
