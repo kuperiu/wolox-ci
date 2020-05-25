@@ -170,9 +170,11 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                  }
                 for (myStage in stagesA) {
                     if (env.DEPLOYMENT != "" && env.GIT_BRANCH == "master") {
-                        stage(myStage.name) {
-                            prepareStage(myStage, stepsA)
-                        }      
+                        if (myStage.environment.contains(env.DEPLOYMENT)) {
+                            stage(myStage.name) {
+                                prepareStage(myStage, stepsA)
+                            }   
+                        }   
                     }
                     else if (env.GIT_BRANCH == myStage.branch || myStage.branch == null) {
                         stage(myStage.name) {

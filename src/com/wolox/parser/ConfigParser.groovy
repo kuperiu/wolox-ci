@@ -91,6 +91,11 @@ class ConfigParser {
                     if (i == "branch") {
                         stage.branch = j
                     }
+                    if (i == "event") {
+                        v.when.environment.each { environment ->
+                            stage.environment.add(environment)
+                        }
+                    }
                 }
             }
             return stage
