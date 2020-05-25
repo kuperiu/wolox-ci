@@ -104,9 +104,8 @@ def prepareDeployment(owner, repo) {
     def ref = env.GIT_COMMIT
     def environment = env.DEPLOYMENT
     def description = env.RUN_DISPLAY_URL
-    def auto_merge = "false"
     def deployURL = "https://api.github.com/repos/${owner}/${repo}/deployments"
-    def deployBody = '{"ref": "' + ref +'", "auto_merge": "' + auto_merge +'",  "environment": "' + environment  +'","description": "' + description + '" }'
+    def deployBody = '{"ref": "' + ref +'", "environment": "' + environment  +'","description": "' + description + '" }'
     def response = httpRequest authentication: 'github2', httpMode: 'POST', requestBody: deployBody, responseHandle: 'STRING', url: deployURL
     if(response.status != 201) {
         error("Deployment API Create Failed: " + response.status)
