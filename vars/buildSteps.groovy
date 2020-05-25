@@ -100,7 +100,7 @@ def prepareStage(myStage, stepsA) {
     parallelSteps.clear()
 }
 
-def prepareDeployment() {
+def prepareDeployment(owner, repo) {
     def ref = env.GIT_COMMIT
     def deployURL = "https://api.github.com/repos/${owner}/${repo}/deployments"
     def deployBody = '{"ref": "' + ref +'","environment": "' + environment  +'","description": "' + description + '"}'
@@ -116,9 +116,7 @@ def prepareDeployment() {
     return id
 }
 
-def recordDeploymentStatus(result) {
-    def jobName = env.JOB_NAME.split("/")
-    def repo = jobName[0]
+def recordDeploymentStatus(owner, repo, result) {
     def deployStatusBody = '{"state": "' + result + '","target_url": "http://github.com/deploymentlogs"}'
     def deployStatusURL = "https://api.github.com/repos/${owner}/${repo}/deployments/${id}/statuses"
     def deployStatusResponse = httpRequest authentication: 'github2', httpMode: 'POST', requestBody: deployStatusBody , responseHandle: 'STRING', url: deployStatusURL
@@ -153,6 +151,9 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         def runParallel = true
         def owner = "kuperiu"
         def id = ""
+        def jobName = env.JOB_NAME.split("/")
+        def repo = jobName[0]
+
         properties([[$class: 'ParametersDefinitionProperty', parameterDefinitions: [[$class: 'StringParameterDefinition', name: 'DEPLOYMENT', defaultValue: '']]]])
 
         withEnv(secretList) {
@@ -160,7 +161,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                 def scmVars = checkout(scm)  
                 addScmVars(scmVars)
                  if (env.DEPLOYMENT != "" && env.GIT_BRANCH == "master") {
-                     id = prepareDeployment()
+                     id = prepareDeployment(owner, repo)
                  }
                 for (myStage in stagesA) {
                     if (env.DEPLOYMENT != "" && env.GIT_BRANCH == "master") {
@@ -177,9 +178,9 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
 
                 if (env.DEPLOYMENT != "" && env.GIT_BRANCH == "master") {
                     if (currentBuild.result != null) {
-                        recordDeploymentStatus("success")
+                        recordDeploymentStatus(owner, repo, "success")
                     } else {
-                        recordDeploymentStatus("failure")
+                        recordDeploymentStatus(owner, repo, "failure")
                     }        
                 }
             }
