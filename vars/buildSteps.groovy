@@ -81,7 +81,7 @@ def prepareStage(myStage, stepsA) {
         }
     }
     parallel(parallelSteps)
-    stash name: 'thymeleaf-sources',includes: '.'
+    stash name: myStage.name
     parallelSteps.clear()
 }
 
