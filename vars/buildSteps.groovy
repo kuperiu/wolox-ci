@@ -106,7 +106,7 @@ def prepareDeployment(owner, repo) {
     def description = env.RUN_DISPLAY_URL
     def deployURL = "https://api.github.com/repos/${owner}/${repo}/deployments"
     def deployBody = '{"ref": "' + ref +'", "required_contexts": [], "environment": "' + environment  +'","description": "' + description + '" }'
-    echo deployBody
+
     def response = httpRequest authentication: 'github2', httpMode: 'POST', requestBody: deployBody, responseHandle: 'STRING', url: deployURL
     if(response.status != 201) {
         error("Deployment API Create Failed: " + response.status)
@@ -116,14 +116,11 @@ def prepareDeployment(owner, repo) {
     if(id == "") {
         error("Could not extract id from Deployment response")
     }
-                     echo "@@@id@@@"
-                     echo id
-                     echo response.content
-                     echo responseJson
-    return id
+
+    return id.toString()
 }
 
-def recordDeploymentStatus(owner, repo, result) {
+def recordDeploymentStatus(id, owner, repo, result) {
     def deployStatusBody = '{"state": "' + result + '","target_url": "http://github.com/deploymentlogs"}'
     def deployStatusURL = "https://api.github.com/repos/${owner}/${repo}/deployments/${id}/statuses"
     def deployStatusResponse = httpRequest authentication: 'github2', httpMode: 'POST', requestBody: deployStatusBody , responseHandle: 'STRING', url: deployStatusURL
@@ -187,9 +184,9 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
 
                 if (env.DEPLOYMENT != "" && env.GIT_BRANCH == "master") {
                     if (currentBuild.result != null) {
-                        recordDeploymentStatus(owner, repo, "success")
+                        recordDeploymentStatus(id, owner, repo, "success")
                     } else {
-                        recordDeploymentStatus(owner, repo, "failure")
+                        recordDeploymentStatus(id, owner, repo, "failure")
                     }        
                 }
             }
