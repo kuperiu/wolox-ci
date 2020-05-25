@@ -32,22 +32,6 @@ def prepareBuildStages(sta, steps) {
     }
 
     return buildStagesList
-
-//     stages.each{ sta ->
-//         println(sta.name)
-//         println(sta.steps)
-//         sta.steps.each { stepName ->
-//             def buildParallelMap = [:]
-//             steps.each { ste ->
-//                 if (ste.name == stepName) {
-//                     buildParallelMap.put(stepName, prepareOneBuildStage(stepName))
-//                 }
-//             }
-//             buildStagesList.add(buildParallelMap)
-//         }
-//     }
-  
-//   return buildStagesList
 }
 
 def prepareOneBuildStage(String name) {
@@ -130,6 +114,13 @@ def recordDeploymentStatus(id, owner, repo, result) {
     }
 }
 
+def isDeployment() {
+    if (env.DEPLOYMENT != "" && env.GIT_BRANCH == "master") {
+        return true
+    }
+    return false
+}
+
 def call(ProjectConfiguration projectConfig, def dockerImage) {
     if (currentBuild.rawBuild.getCauses().toString().contains('BranchIndexingCause')) {
         print "INFO: Build skipped due to trigger being Branch Indexing"
@@ -158,18 +149,18 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         def id = ""
         def jobName = env.JOB_NAME.split("/")
         def repo = jobName[0]
-
+        preserveStashes(buildCount: 50) 
         properties([[$class: 'ParametersDefinitionProperty', parameterDefinitions: [[$class: 'StringParameterDefinition', name: 'DEPLOYMENT', defaultValue: '']]]])
 
         withEnv(secretList) {
             node(label) {    
                 def scmVars = checkout(scm)  
                 addScmVars(scmVars)
-                 if (env.DEPLOYMENT != "" && env.GIT_BRANCH == "master") {
+                 if (isDeployment()) {
                      id = prepareDeployment(owner, repo)
                  }
                 for (myStage in stagesA) {
-                    if (env.DEPLOYMENT != "" && env.GIT_BRANCH == "master") {
+                    if (isDeployment()) {
                         if (myStage.environment.contains(env.DEPLOYMENT)) {
                             stage(myStage.name) {
                                 prepareStage(myStage, stepsA)
@@ -188,7 +179,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                     }
                 }
 
-                if (env.DEPLOYMENT != "" && env.GIT_BRANCH == "master") {
+                if (isDeployment()) {
                     if (currentBuild.result == "FAILURE") {
                         recordDeploymentStatus(id, owner, repo, "failure")
                     } else {
