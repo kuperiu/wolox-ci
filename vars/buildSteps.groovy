@@ -175,7 +175,8 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                     else {
                         stage(myStage.name) {
                             prepareStage(myStage, stepsA)
-                        }    
+                        }  
+                        stash '.'  
                     }
                 }
 
