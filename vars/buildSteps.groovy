@@ -81,7 +81,6 @@ def prepareStage(myStage, stepsA) {
         }
     }
     parallel(parallelSteps)
-    stash name: myStage.name
     parallelSteps.clear()
 }
 
@@ -150,7 +149,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         def id = ""
         def jobName = env.JOB_NAME.split("/")
         def repo = jobName[0]
-        preserveStashes(buildCount: 50) 
+
         properties([[$class: 'ParametersDefinitionProperty', parameterDefinitions: [[$class: 'StringParameterDefinition', name: 'DEPLOYMENT', defaultValue: '']]]])
 
         withEnv(secretList) {
