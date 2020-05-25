@@ -106,6 +106,7 @@ def prepareDeployment(owner, repo) {
     def description = env.RUN_DISPLAY_URL
     def deployURL = "https://api.github.com/repos/${owner}/${repo}/deployments"
     def deployBody = '{"ref": "' + ref +'", "required_contexts": "' + [] +'", "environment": "' + environment  +'","description": "' + description + '" }'
+    echo deployBody
     def response = httpRequest authentication: 'github2', httpMode: 'POST', requestBody: deployBody, responseHandle: 'STRING', url: deployURL
     if(response.status != 201) {
         error("Deployment API Create Failed: " + response.status)
