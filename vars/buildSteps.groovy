@@ -100,6 +100,33 @@ def prepareStage(myStage, stepsA) {
     parallelSteps.clear()
 }
 
+def prepareDeployment() {
+    def ref = env.GIT_COMMIT
+    def deployURL = "https://api.github.com/repos/${owner}/${repo}/deployments"
+    def deployBody = '{"ref": "' + ref +'","environment": "' + environment  +'","description": "' + description + '"}'
+    def response = httpRequest authentication: 'github2', httpMode: 'POST', requestBody: deployBody, responseHandle: 'STRING', url: deployURL
+    if(response.status != 201) {
+        error("Deployment API Create Failed: " + response.status)
+    }
+    def responseJson = readJSON text: response.content
+    def id = responseJson.id
+    if(id == "") {
+        error("Could not extract id from Deployment response")
+    }
+    return id
+}
+
+def recordDeploymentStatus(result) {
+    def jobName = env.JOB_NAME.split("/")
+    def repo = jobName[0]
+    def deployStatusBody = '{"state": "' + result + '","target_url": "http://github.com/deploymentlogs"}'
+    def deployStatusURL = "https://api.github.com/repos/${owner}/${repo}/deployments/${id}/statuses"
+    def deployStatusResponse = httpRequest authentication: 'github2', httpMode: 'POST', requestBody: deployStatusBody , responseHandle: 'STRING', url: deployStatusURL
+    if(deployStatusResponse.status != 201) {
+        error("Deployment Status API Update Failed: " + deployStatusResponse.status)
+    }
+}
+
 def call(ProjectConfiguration projectConfig, def dockerImage) {
     if (currentBuild.rawBuild.getCauses().toString().contains('BranchIndexingCause')) {
         print "INFO: Build skipped due to trigger being Branch Indexing"
@@ -124,13 +151,17 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
         label = "team_a"
         def links = '--entrypoint=""'
         def runParallel = true
-        def buildStages
+        def owner = "kuperiu"
+        def id = ""
         properties([[$class: 'ParametersDefinitionProperty', parameterDefinitions: [[$class: 'StringParameterDefinition', name: 'DEPLOYMENT', defaultValue: '']]]])
 
         withEnv(secretList) {
             node(label) {    
                 def scmVars = checkout(scm)  
                 addScmVars(scmVars)
+                 if (env.DEPLOYMENT != "" && env.GIT_BRANCH == "master") {
+                     id = prepareDeployment()
+                 }
                 for (myStage in stagesA) {
                     if (env.DEPLOYMENT != "" && env.GIT_BRANCH == "master") {
                         stage(myStage.name) {
@@ -145,176 +176,13 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                 }
 
                 if (env.DEPLOYMENT != "" && env.GIT_BRANCH == "master") {
-                    echo currentBuild.result
+                    if (currentBuild.result != null) {
+                        recordDeploymentStatus("success")
+                    } else {
+                        recordDeploymentStatus("failure")
+                    }        
                 }
             }
         }
     }
 }
-        // withEnv(secretList) {
-        //     node() {
-        //         stagesA.each { s ->
-        //                 parallel 'linux': {
-        //                     stage('Linux') {
-        //                        println("Linux")
-        //                     }
-        //                 }, 'windows': {
-        //                     stage('Windows') {
-        //                         println("Windows")
-        //                     }
-        //                 }
-        //             }
-
-        //         }
-        //     }
-// node('master') {
-//   stage('Initialise') {
-//     // Set up List<Map<String,Closure>> describing the builds
-//     buildStages = prepareBuildStages()
-//     println("Initialised pipeline.")
-//   }
-
-//   for (builds in buildStages) {
-//     if (runParallel) {
-//       parallel(builds)
-//     } else {
-//       // run serially (nb. Map is unordered! )
-//       for (build in builds.values()) {
-//         build.call()
-//       }
-//     }
-//   }
-
-//   stage('Finish') {
-//       println('Build complete.')
-//   }
-// }
-            // stagesA.each { s ->
-            //     node(label) {
-            //         stage(s.name) {
-            //             s.steps.each {
-            //                 def step = getStep(stepsA, it)
-            //                 // parallel (
-            //                 //     "${step.name}": {
-            //                 //         node(label) {
-            //                 //             docker.image(step.image).inside("--entrypoint=''")  {
-            //                 //                 step.commands.each { command ->
-            //                 //                     sh command
-            //                 //                 }
-            //                 //             }   
-            //                 //         }
-            //                 //     }
-            //                 // )
-            //             }
-            //         }
-            //     }
-            // }
-    //     }
-    // }
-// }
-
-// def getStep(Steps steps, String name) {
-//     Step step = new Step()
-//     steps.each { k, v ->
-//         if (k == name) {
-//             step.set(k, v.image, v.commands)
-//         }
-//     }
-//     return step
-// }
-
-// // Create List of build stages to suit
-// def prepareBuildStages(stages, steps) {
-//     // stages.each { sta ->
-//     //      def buildParallelMap = [:]
-//     //      sta.steps.each { stepName ->
-//     //         steps.each { ste ->
-//     //             if (ste.name == stepName) {
-//     //                 println(stepName)
-//     //             }
-//     //         }
-//     //      }
-//     // }
-//   def buildStagesList = []
-//   for (i=1; i<5; i++) {
-//     def buildParallelMap = [:]
-//     for (name in [ 'one', 'two', 'three' ] ) {
-//       def n = "${name} ${i}"
-//       buildParallelMap.put(n, prepareOneBuildStage(n))
-//     }
-//     buildStagesList.add(buildParallelMap)
-//   }
-//   return buildStagesList
-// }
-
-// def prepareOneBuildStage(String name) {
-//   return {
-//     stage("Build stage:${name}") {
-//       println("Building ${name}")
-//       sh(script:'sleep 5', returnStatus:true)
-//     }
-//   }
-// }
-
-
-
-// def calling(ProjectConfiguration projectConfig, def dockerImage) {
-//     return { variables ->
-//         List<Step> stepsA = projectConfig.steps.steps
-//         List<Secret> secrets = projectConfig.secrets.secrets
-//         def secretList = []
-//         secrets.each { secret ->
-//            mySecret = vault(secret.service, secret.path, secret.key)
-//            secretList << "${secret.name}=${mySecret}"
-//         } 
-
-
-//         //def links = variables.collect { k, v -> "--entrypoint="" --link ${v.id}:${k}" }.join(" ")
-//         label = "team_a"
-//         def links = '--entrypoint=""'
-//         withEnv(secretList) {
-//             stepsA.each { step ->
-//                 node(label) {
-//                     stage "Start"
-//                     parallel (
-//                         "${step.name}": {
-//                             node(label) {
-//                                 docker.image(step.image).inside("--entrypoint=''")  {
-//                                      step.commands.each { command ->
-//                                         sh command
-//                                      }
-//                                 }   
-//                             }
-//                         }
-// //   'Build' : {
-// //     node {
-// //       git url: 'http://github.com/karlkfi/minitwit'
-// //       sh 'ci/build.sh'
-// //     }
-// //   },
-// //   'Test' : {
-// //     node {
-// //       git url: 'http://github.com/karlkfi/minitwit'
-// //       sh 'ci/test-unit.sh'
-// //     }
-// //   }
-//                         // stage(step.name) {
-//                         //     // def customImage = docker.image(step.image)
-//                         //         docker.image(step.image).inside("--entrypoint=''")  {
-//                         //             step.commands.each { command ->
-//                         //                 sh command
-//                         //             }
-//                         //         }
-//                         //     }
-//                     )
-// node(label) {
-//     stage 'middle' {
-
-//     }
-// }
-//                 }
-//             }
-//         }
-//     }
-// }
-
