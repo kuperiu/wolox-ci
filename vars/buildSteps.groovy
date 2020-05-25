@@ -165,6 +165,8 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                 addScmVars(scmVars)
                  if (env.DEPLOYMENT != "" && env.GIT_BRANCH == "master") {
                      id = prepareDeployment(owner, repo)
+                     echo "##id##"
+                     echo id
                  }
                 for (myStage in stagesA) {
                     if (env.DEPLOYMENT != "" && env.GIT_BRANCH == "master") {
