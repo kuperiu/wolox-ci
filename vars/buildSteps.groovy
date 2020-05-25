@@ -135,15 +135,17 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                     if (env.DEPLOYMENT != "" && env.GIT_BRANCH == "master") {
                         stage(myStage.name) {
                             prepareStage(myStage, stepsA)
-                        }              
+                        }      
                     }
                     if (env.GIT_BRANCH == myStage.branch || myStage.branch == null) {
                         stage(myStage.name) {
                             prepareStage(myStage, stepsA)
-                            echo "###build####"
-                            echo currentBuild.result
                         }                      
                     }
+                }
+
+                if (env.DEPLOYMENT != "" && env.GIT_BRANCH == "master") {
+                    echo currentBuild.result
                 }
             }
         }
