@@ -116,6 +116,8 @@ def prepareDeployment(owner, repo) {
     if(id == "") {
         error("Could not extract id from Deployment response")
     }
+                     echo "@@@id@@@"
+                     echo id
     return id
 }
 
