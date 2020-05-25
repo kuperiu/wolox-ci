@@ -183,6 +183,8 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                 }
 
                 if (env.DEPLOYMENT != "" && env.GIT_BRANCH == "master") {
+                    echo "urrentBuild.result "
+                    echo currentBuild.result 
                     if (currentBuild.result != null) {
                         recordDeploymentStatus(id, owner, repo, "success")
                     } else {
