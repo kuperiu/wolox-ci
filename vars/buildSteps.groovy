@@ -81,6 +81,7 @@ def prepareStage(myStage, stepsA) {
         }
     }
     parallel(parallelSteps)
+    stash '.'
     parallelSteps.clear()
 }
 
@@ -175,8 +176,7 @@ def call(ProjectConfiguration projectConfig, def dockerImage) {
                     else {
                         stage(myStage.name) {
                             prepareStage(myStage, stepsA)
-                        }  
-                        stash '.'  
+                        }    
                     }
                 }
 
