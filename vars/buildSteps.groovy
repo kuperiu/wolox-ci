@@ -118,6 +118,7 @@ def prepareDeployment(owner, repo) {
     }
                      echo "@@@id@@@"
                      echo id
+                     echo response.content
                      echo responseJson
     return id
 }
